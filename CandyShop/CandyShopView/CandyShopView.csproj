@@ -73,6 +73,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorage.Designer.cs">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStorageReplenishment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorageReplenishment.Designer.cs">
+      <DependentUpon>FormStorageReplenishment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStorages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorages.Designer.cs">
+      <DependentUpon>FormStorages.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSweet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +135,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormStorage.resx">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStorageReplenishment.resx">
+      <DependentUpon>FormStorageReplenishment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSweet.resx">
       <DependentUpon>FormSweet.cs</DependentUpon>
     </EmbeddedResource>

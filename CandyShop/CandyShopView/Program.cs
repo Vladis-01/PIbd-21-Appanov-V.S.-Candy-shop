@@ -29,10 +29,14 @@ namespace CandyShopView
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPastryStorage, PastryStorage>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IStorageStorage, StorageStorage>(new
+           HierarchicalLifetimeManager());
             currentContainer.RegisterType<SweetLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<PastryLogic>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<StorageLogic>(new
            HierarchicalLifetimeManager());
             return currentContainer;
         }
