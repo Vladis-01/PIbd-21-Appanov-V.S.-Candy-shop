@@ -1,0 +1,22 @@
+﻿using CandyShopDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace CandyShopDatabaseImplement
+{
+    public class CandyShopDatabase : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (optionsBuilder.IsConfigured == false)
+            {
+                optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-0QLL4V2\SQLEXPRESS;Initial Catalog=CandyShopDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+            }
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        public virtual DbSet<Sweet> Sweets { set; get; }
+        public virtual DbSet<Pastry> Pastrys { set; get; }
+        public virtual DbSet<PastrySweet> PastrySweets { set; get; }
+        public virtual DbSet<Order> Orders { set; get; }
+    }
+}
