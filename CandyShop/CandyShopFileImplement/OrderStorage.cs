@@ -1,49 +1,23 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
-using CandyShopListImplement.Models;
+using CandyShopFileImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace CandyShopListImplement.Implements
+
+namespace CandyShopFileImplement.Implements
 {
     public class OrderStorage : IOrderStorage
     {
-        private readonly DataListSingleton source;
+        private readonly FileDataListSingleton source;
+
         public OrderStorage()
         {
-            source = DataListSingleton.GetInstance();
-        }
-        private Order CreateModel(OrderBindingModel model, Order order)
-        {
-            if (model.Id != null)
-            {
-                order.Id = (int)model.Id;
-            }
-            order.PastryId = model.PastryId;
-            order.Count = model.Count;
-            order.Sum = model.Sum;
-            order.Status = model.Status;
-            order.DateCreate = model.DateCreate;
-            order.DateImplement = model.DateImplement;
-            return order;
-        }
-        private OrderViewModel CreateModel(Order order)
-        {
-            return new OrderViewModel
-            {
-                Id = order.Id,
-                PastryId = order.PastryId,
-                PastryName = order.PastryName,
-                Count = order.Count,
-                Sum = order.Sum,
-                Status = order.Status,
-                DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
-            };
+            source = FileDataListSingleton.GetInstance();
         }
 
-        List<OrderViewModel> IOrderStorage.GetFullList()
+        public List<OrderViewModel> GetFullList()
         {
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
@@ -62,7 +36,7 @@ namespace CandyShopListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id)
+                if (order.PastryId == model.PastryId)
                 {
                     result.Add(CreateModel(order));
                 }
@@ -78,7 +52,8 @@ namespace CandyShopListImplement.Implements
             }
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id || order.PastryId == model.PastryId)
+                if (order.Id == model.Id || order.PastryId ==
+               model.PastryId)
                 {
                     return CreateModel(order);
                 }
@@ -130,6 +105,31 @@ namespace CandyShopListImplement.Implements
                 }
             }
             throw new Exception("Элемент не найден");
+        }
+
+        private Order CreateModel(OrderBindingModel model, Order order)
+        {
+            order.PastryId = model.PastryId;
+            order.Count = model.Count;
+            order.Sum = model.Sum;
+            order.Status = model.Status;
+            order.DateCreate = model.DateCreate;
+            order.DateImplement = model.DateImplement;
+            return order;
+        }
+
+        private OrderViewModel CreateModel(Order order)
+        {
+            return new OrderViewModel
+            {
+                Id = order.Id,
+                PastryId = order.PastryId,
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = order.Status,
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement
+            };
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.BusinessLogics;
-using CandyShopBusinessLogic.ViewModels;
 using System;
 using System.Windows.Forms;
 using Unity;
+using CandyShopBusinessLogic.ViewModels;
 namespace CandyShopView
 {
     public partial class FormMain : Form
