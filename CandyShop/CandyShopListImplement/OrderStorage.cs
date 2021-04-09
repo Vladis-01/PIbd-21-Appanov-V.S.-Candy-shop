@@ -34,7 +34,6 @@ namespace CandyShopListImplement.Implements
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                PastryName = order.PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
