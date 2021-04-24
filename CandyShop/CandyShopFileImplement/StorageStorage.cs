@@ -140,47 +140,9 @@ namespace CandyShopFileImplement.Implements
             }
         }
 
-        public bool TakeFromStorage(Dictionary<int, (string, int)> sweets, int count)
+        public void CheckSweets(PastryViewModel model, int sweetCountInOrder)
         {
-            foreach (var sweet in sweets)
-            {
-                int _count = source.Storages.
-                    Where(gift => gift.StorageSweets
-                    .ContainsKey(sweet.Key))
-                    .Sum(gift => gift.StorageSweets[sweet.Key]);
-
-                if (_count < sweet.Value.Item2 * count)
-                {
-                    return false;
-                }
-            }
-
-            foreach (var sweet in sweets)
-            {
-                int _count = sweet.Value.Item2 * count;
-                IEnumerable<Storage> storages = source.Storages.Where(pastry => pastry.StorageSweets.ContainsKey(sweet.Key));
-
-                foreach (Storage storage in storages)
-                {
-                    if (storage.StorageSweets[sweet.Key] <= _count)
-                    {
-                        _count -= storage.StorageSweets[sweet.Key];
-                        storage.StorageSweets.Remove(sweet.Key);
-                    }
-                    else
-                    {
-                        storage.StorageSweets[sweet.Key] -= _count;
-                        _count = 0;
-                    }
-
-                    if (_count == 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

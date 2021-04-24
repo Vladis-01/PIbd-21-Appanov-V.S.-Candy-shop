@@ -55,10 +55,14 @@ namespace CandyShopBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            if (!_storageStorage.TakeFromStorage(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }).PastrySweets, order.Count))
+
+            var pastry = _pastryStorage.GetElement(new PastryBindingModel
             {
-                throw new Exception("Недостаточно материалов для кондитерских изделий");
-            }
+                Id = order.PastryId
+            });
+
+            _storageStorage.CheckSweets(pastry, order.Count);
+
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
