@@ -87,7 +87,7 @@
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.ButtonSaveToExcel);
             this.Name = "FormReportPastrySweets";
-            this.Text = "FormReportPastrySweets";
+            this.Text = "Компоненты по кондитерским изделиям";
             this.Load += new System.EventHandler(this.FormReportPastrySweets_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
