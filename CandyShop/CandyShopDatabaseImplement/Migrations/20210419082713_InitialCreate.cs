@@ -8,6 +8,21 @@ namespace CandyShopDatabaseImplement.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ClientFIO = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pastrys",
                 columns: table => new
                 {
@@ -41,6 +56,7 @@ namespace CandyShopDatabaseImplement.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PastryId = table.Column<int>(nullable: false),
+                    ClientId = table.Column<int>(nullable: false),
                     Count = table.Column<int>(nullable: false),
                     Sum = table.Column<decimal>(nullable: false),
                     Status = table.Column<int>(nullable: false),
@@ -50,6 +66,12 @@ namespace CandyShopDatabaseImplement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Pastrys_PastryId",
                         column: x => x.PastryId,
@@ -86,6 +108,11 @@ namespace CandyShopDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ClientId",
+                table: "Orders",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_PastryId",
                 table: "Orders",
                 column: "PastryId");
@@ -108,6 +135,9 @@ namespace CandyShopDatabaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "PastrySweets");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "Pastrys");

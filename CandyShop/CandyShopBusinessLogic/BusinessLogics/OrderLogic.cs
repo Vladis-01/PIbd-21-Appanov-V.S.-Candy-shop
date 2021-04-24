@@ -30,6 +30,7 @@ namespace CandyShopBusinessLogic.BusinessLogics
             _orderStorage.Insert(new OrderBindingModel
             {
                 PastryId = model.PastryId,
+                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -55,10 +56,10 @@ namespace CandyShopBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
                 Status = OrderStatus.Выполняется
             });
         }
@@ -81,10 +82,11 @@ namespace CandyShopBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
+                DateImplement = DateTime.Now,
                 Status = OrderStatus.Готов
             });
         }
@@ -107,6 +109,7 @@ namespace CandyShopBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
