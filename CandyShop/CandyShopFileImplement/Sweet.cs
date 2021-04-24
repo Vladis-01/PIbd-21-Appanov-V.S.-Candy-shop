@@ -1,4 +1,4 @@
-﻿namespace CandyShopListImplement.Models
+﻿namespace CandyShopFileImplement.Models
 {
     /// <summary>
     /// Компонент, требуемый для изготовления изделия
@@ -8,4 +8,4 @@
         public int Id { get; set; }
         public string SweetName { get; set; }
     }
-} 
+}
