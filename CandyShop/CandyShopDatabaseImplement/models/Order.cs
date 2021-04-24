@@ -1,6 +1,8 @@
 ﻿using CandyShopBusinessLogic.Enums;
 using System.ComponentModel.DataAnnotations;
 using System;
+using CandyShopDatabaseImplement.models;
+
 namespace CandyShopDatabaseImplement.Models
 {
     /// <summary>
@@ -10,6 +12,7 @@ namespace CandyShopDatabaseImplement.Models
     {
         public int Id { get; set; }
         public int PastryId { get; set; }
+        public int ClientId { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]
@@ -20,5 +23,6 @@ namespace CandyShopDatabaseImplement.Models
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
         public virtual Pastry Pastry { get; set; }
+        public virtual Client Client { get; set; }
     }
 }
