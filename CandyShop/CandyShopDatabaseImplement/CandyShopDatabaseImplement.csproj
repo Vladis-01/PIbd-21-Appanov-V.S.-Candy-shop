@@ -142,9 +142,9 @@
     <Compile Include="Implement\OrderStorage.cs" />
     <Compile Include="Implement\PastryStorage.cs" />
     <Compile Include="Implement\SweetStorage.cs" />
-    <Compile Include="Migrations\20210316084240_InitialCreate.cs" />
-    <Compile Include="Migrations\20210316084240_InitialCreate.designer.cs">
-      <DependentUpon>20210316084240_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\20210322082621_InitialCreate.cs" />
+    <Compile Include="Migrations\20210322082621_InitialCreate.designer.cs">
+      <DependentUpon>20210322082621_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CandyShopDatabaseModelSnapshot.cs" />
     <Compile Include="models\Order.cs" />

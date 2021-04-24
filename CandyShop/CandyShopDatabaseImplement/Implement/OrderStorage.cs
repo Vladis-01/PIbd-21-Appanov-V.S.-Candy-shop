@@ -2,7 +2,6 @@
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
 using CandyShopDatabaseImplement.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,6 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 return context.Orders
-                    .Include(rec => rec.Pastry)
                     .Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,
@@ -42,8 +40,7 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 return context.Orders
-                    .Include(rec => rec.Pastry)
-                    .Where(rec => rec.PastryId == model.PastryId)
+                    .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
                     .Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,
@@ -68,7 +65,6 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 var order = context.Orders
-                    .Include(rec => rec.Pastry)
                     .FirstOrDefault(rec => rec.Id == model.Id);
 
                 return order != null ?

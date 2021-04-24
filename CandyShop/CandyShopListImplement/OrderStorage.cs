@@ -34,6 +34,7 @@ namespace CandyShopListImplement.Implements
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                PastryName = order.PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
@@ -54,14 +55,14 @@ namespace CandyShopListImplement.Implements
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
-            if (model == null)
+            if (model == null || model.DateFrom == null || model.DateTo == null)
             {
                 return null;
             }
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id)
+                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                 {
                     result.Add(CreateModel(order));
                 }

@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataListSingleton.cs" />
     <Compile Include="FileDataListSingleton.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderStorage.cs" />

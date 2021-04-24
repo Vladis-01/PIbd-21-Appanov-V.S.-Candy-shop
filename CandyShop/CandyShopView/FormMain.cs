@@ -12,11 +12,13 @@ namespace CandyShopView
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
         private readonly PastryLogic _pastryLogic;
-        public FormMain(OrderLogic orderLogic, PastryLogic pastryLogic)
+        private readonly ReportLogic _report;
+        public FormMain(OrderLogic orderLogic, PastryLogic pastryLogic, ReportLogic report)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._pastryLogic = pastryLogic;
+            this._report = report;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -29,17 +31,6 @@ namespace CandyShopView
                 var ordersList = _orderLogic.Read(null);
                 if (ordersList != null)
                 {
-                    var pastrysList = _pastryLogic.Read(null);
-                    foreach (OrderViewModel order in ordersList)
-                    {
-                        foreach (PastryViewModel pastry in pastrysList)
-                        {
-                            if (pastry.Id == order.PastryId)
-                            {
-                                order.PastryName = pastry.PastryName;
-                            }
-                        }
-                    }
                     dataGridView.DataSource = ordersList;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
@@ -129,6 +120,34 @@ namespace CandyShopView
         {
             LoadData();
         }
+
+        private void SweetsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _report.SavePastrysToWordFile(new ReportBindingModel
+                    {
+                        FileName =
+                    dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void SweetPastrysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportPastrySweets>();
+            form.ShowDialog();
+        }
+        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+
     }
 }
 
