@@ -9,9 +9,13 @@ namespace CandyShopBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly IPastryStorage _pastryStorage;
+        private readonly IStorageStorage _storageStorage;
+        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage)
         {
             _orderStorage = orderStorage;
+            _pastryStorage = pastryStorage;
+            _storageStorage = storageStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -50,6 +54,10 @@ namespace CandyShopBusinessLogic.BusinessLogics
             if (order.Status != OrderStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
+            }
+            if (!_storageStorage.TakeFromStorage(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }).PastrySweets, order.Count))
+            {
+                throw new Exception("Недостаточно материалов для кондитерских изделий");
             }
             _orderStorage.Update(new OrderBindingModel
             {

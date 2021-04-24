@@ -191,6 +191,10 @@
       <Project>{02cada80-7109-4aaa-8058-96c939ea9d26}</Project>
       <Name>CandyShopBusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CandyShopFileImplement\CandyShopFileImplement.csproj">
+      <Project>{64eb0939-8dc4-472b-8f5f-de865f243ac9}</Project>
+      <Name>CandyShopFileImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CandyShopListImplement\CandyShopListImplement.csproj">
       <Project>{3ca6a440-ffd0-4384-8b58-229f69ae3498}</Project>
       <Name>CandyShopListImplement</Name>

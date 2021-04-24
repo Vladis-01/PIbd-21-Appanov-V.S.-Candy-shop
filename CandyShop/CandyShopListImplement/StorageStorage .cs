@@ -180,5 +180,10 @@ namespace CandyShopListImplement.Implements
                 StorageSweets = storageSweets
             };
         }
+
+        public bool TakeFromStorage(Dictionary<int, (string, int)> sweets, int count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
