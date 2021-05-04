@@ -146,13 +146,16 @@
     <Compile Include="Migrations\20210424075458_InitialCreate.cs" />
     <Compile Include="Migrations\20210424075458_InitialCreate.designer.cs">
       <DependentUpon>20210424075458_InitialCreate.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\CandyShopDatabaseModelSnapshot.cs" />
     <Compile Include="models\Order.cs" />
     <Compile Include="models\Pastry.cs" />
     <Compile Include="models\PastrySweet.cs" />
+
     <Compile Include="models\Storage.cs" />
     <Compile Include="models\StorageSweet.cs" />
+
     <Compile Include="models\Sweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

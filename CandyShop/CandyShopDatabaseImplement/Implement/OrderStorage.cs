@@ -40,7 +40,8 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 return context.Orders
-                    .Where(rec => rec.PastryId == model.PastryId)
+                    .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+
                     .Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,
