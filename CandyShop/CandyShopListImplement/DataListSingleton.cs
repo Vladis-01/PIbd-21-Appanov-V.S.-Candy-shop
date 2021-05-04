@@ -8,11 +8,13 @@ namespace CandyShopListImplement
         public List<Sweet> Sweets { get; set; }
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastrys { get; set; }
+        public List<Storage> Storages { get; set; }
         private DataListSingleton()
         {
             Sweets = new List<Sweet>();
             Orders = new List<Order>();
             Pastrys = new List<Pastry>();
+            Storages = new List<Storage>();
         }
         public static DataListSingleton GetInstance()
         {

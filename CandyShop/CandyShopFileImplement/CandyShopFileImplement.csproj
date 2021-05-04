@@ -47,6 +47,10 @@
     <Compile Include="Pastry.cs" />
     <Compile Include="PastryStorage .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+
+    <Compile Include="Storage.cs" />
+    <Compile Include="StorageStorage.cs" />
+
     <Compile Include="Sweet.cs" />
     <Compile Include="SweetStorage.cs" />
   </ItemGroup>

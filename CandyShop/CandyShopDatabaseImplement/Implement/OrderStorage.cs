@@ -41,6 +41,7 @@ namespace CandyShopDatabaseImplement.Implements
             {
                 return context.Orders
                     .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+
                     .Select(rec => new OrderViewModel
                     {
                         Id = rec.Id,
