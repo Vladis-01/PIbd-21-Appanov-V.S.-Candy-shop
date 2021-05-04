@@ -161,6 +161,33 @@ namespace CandyShopView
             form.ShowDialog();
         }
 
+        private void storagesListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _report.SaveStoragesToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void sweetsByStoragesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportSweetsStorages>();
+            form.ShowDialog();
+        }
+
+        private void ordersByDatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrdersByDates>();
+            form.ShowDialog();
+        }
     }
 }
 

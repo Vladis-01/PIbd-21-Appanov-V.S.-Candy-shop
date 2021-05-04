@@ -1,12 +1,16 @@
 ﻿using CandyShopBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Text;
+
 namespace CandyShopBusinessLogic.HelperModels
 {
-    class ExcelInfo
+    public class PdfInfoOrdersByDates
     {
         public string FileName { get; set; }
+
         public string Title { get; set; }
-        public List<ReportPastrySweetViewModel> PastrySweets { get; set; }
-        public List<ReportStorageSweetViewModel> Storages { get; set; }
+
+        public List<ReportOrderByDatesViewModel> Orders { get; set; }
     }
 }

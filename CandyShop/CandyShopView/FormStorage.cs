@@ -109,7 +109,8 @@ namespace CandyShopView
                     Id = id,
                     StorageName = textBoxName.Text,
                     StorageManager = textBoxManager.Text,
-                    StorageSweets = storageSweets
+                    StorageSweets = storageSweets,
+                    DateCreate = DateTime.Now
                 });
 
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
