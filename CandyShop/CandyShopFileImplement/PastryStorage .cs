@@ -68,7 +68,8 @@ namespace CandyShopFileImplement.Implements
 
         public void Update(PastryBindingModel model)
         {
-            var element = source.Pastrys.FirstOrDefault(rec => rec.Id == model.Id); if (element == null)
+            var element = source.Pastrys.FirstOrDefault(rec => rec.Id == model.Id); 
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }

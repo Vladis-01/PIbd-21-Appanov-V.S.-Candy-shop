@@ -16,11 +16,13 @@ namespace CandyShopFileImplement
         private readonly string SweetFileName = "Sweet.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string PastryFileName = "Pastry.xml";
+        private readonly string StorageFileName = "Storage.xml";
         private readonly string ClientFileName = "Client.xml";
 
         public List<Sweet> Sweets { get; set; }
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastrys { get; set; }
+        public List<Storage> Storages { get; set; }
         public List<Client> Clients { get; set; }
 
         private FileDataListSingleton()
@@ -28,6 +30,7 @@ namespace CandyShopFileImplement
             Sweets = LoadSweets();
             Orders = LoadOrders();
             Pastrys = LoadPastrys();
+            Storages = LoadStorages();
             Clients = LoadClients();
         }
 
@@ -46,6 +49,7 @@ namespace CandyShopFileImplement
             SaveSweets();
             SaveOrders();
             SavePastrys();
+            SaveStorages();
         }
 
         private List<Client> LoadClients()
@@ -182,6 +186,39 @@ namespace CandyShopFileImplement
             return list;
         }
 
+        private List<Storage> LoadStorages()
+        {
+            var list = new List<Storage>();
+
+            if (File.Exists(StorageFileName))
+            {
+                XDocument xDocument = XDocument.Load(StorageFileName);
+
+                var xElements = xDocument.Root.Elements("Storage").ToList();
+
+                foreach (var storage in xElements)
+                {
+                    var storageSweets = new Dictionary<int, int>();
+
+                    foreach (var material in storage.Element("StorageSweets").Elements("StorageSweets").ToList())
+                    {
+                        storageSweets.Add(Convert.ToInt32(material.Element("Key").Value), Convert.ToInt32(material.Element("Value").Value));
+                    }
+
+                    list.Add(new Storage
+                    {
+                        Id = Convert.ToInt32(storage.Attribute("Id").Value),
+                        StorageName = storage.Element("StorageName").Value,
+                        StorageManager = storage.Element("StorageManager").Value,
+                        DateCreate = Convert.ToDateTime(storage.Element("DateCreate").Value),
+                        StorageSweets = storageSweets
+                    });
+                }
+            }
+
+            return list;
+        }
+
         private void SaveSweets()
         {
             if (Sweets != null)
@@ -241,6 +278,36 @@ namespace CandyShopFileImplement
 
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(PastryFileName);
+            }
+        }
+
+        private void SaveStorages()
+        {
+            if (Storages != null)
+            {
+                var xElement = new XElement("Storages");
+
+                foreach (var storage in Storages)
+                {
+                    var storageMaterials = new XElement("StorageSweets");
+
+                    foreach (var sweet in storage.StorageSweets)
+                    {
+                        storageMaterials.Add(new XElement("StorageSweets",
+                            new XElement("Key", sweet.Key),
+                            new XElement("Value", sweet.Value)));
+                    }
+
+                    xElement.Add(new XElement("Storage",
+                        new XAttribute("Id", storage.Id),
+                        new XElement("StorageName", storage.StorageName),
+                        new XElement("StorageManager", storage.StorageManager),
+                        new XElement("DateCreate", storage.DateCreate.ToString()),
+                        storageMaterials));
+                }
+
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(StorageFileName);
             }
         }
     }
