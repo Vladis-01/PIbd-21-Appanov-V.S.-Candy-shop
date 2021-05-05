@@ -121,7 +121,7 @@
             this.Controls.Add(this.reportViewerOrders);
             this.Controls.Add(this.panelDate);
             this.Name = "FormReportOrders";
-            this.Text = "Список заказов";
+            this.Text = "FormReportOrders";
             this.Load += new System.EventHandler(this.FormClientOrders_Load);
             this.panelDate.ResumeLayout(false);
             this.panelDate.PerformLayout();

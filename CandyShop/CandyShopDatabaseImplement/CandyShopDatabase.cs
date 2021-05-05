@@ -1,4 +1,5 @@
-﻿using CandyShopDatabaseImplement.Models;
+﻿using CandyShopDatabaseImplement.models;
+using CandyShopDatabaseImplement.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CandyShopDatabaseImplement
@@ -20,5 +21,6 @@ namespace CandyShopDatabaseImplement
         public virtual DbSet<Order> Orders { set; get; }
         public virtual DbSet<Storage> Storages { set; get; }
         public virtual DbSet<StorageSweet> StorageSweets { set; get; }
+        public virtual DbSet<Client> Clients { set; get; }
     }
 }

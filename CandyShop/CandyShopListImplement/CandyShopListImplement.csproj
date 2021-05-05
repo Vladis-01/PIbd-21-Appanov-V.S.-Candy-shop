@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Storage.cs" />
     <Compile Include="StorageStorage .cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientStorage.cs" />
     <Compile Include="SweetStorage.cs" />
     <Compile Include="DataListSingleton.cs" />
     <Compile Include="Order.cs" />
