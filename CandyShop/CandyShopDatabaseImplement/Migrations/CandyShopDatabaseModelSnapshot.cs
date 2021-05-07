@@ -227,12 +227,11 @@ namespace CandyShopDatabaseImplement.Migrations
                         .IsRequired();
 
                     b.HasOne("CandyShopDatabaseImplement.Models.Sweet", "Sweet")
-                        .WithMany()
+                        .WithMany("StorageSweets")
                         .HasForeignKey("SweetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-
 #pragma warning restore 612, 618
         }
     }

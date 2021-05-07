@@ -1,13 +1,15 @@
-﻿using CandyShopBusinessLogic.BusinessLogics;
-using CandyShopBusinessLogic.Interfaces;
-using CandyShopDatabaseImplement.Implements;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CandyShopRestApi
+namespace StorageEmployeeApp
 {
     public class Startup
     {
@@ -21,17 +23,7 @@ namespace CandyShopRestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IClientStorage, ClientStorage>();
-            services.AddTransient<IOrderStorage, OrderStorage>();
-            services.AddTransient<IPastryStorage, PastryStorage>();
-            services.AddTransient<IStorageStorage, StorageStorage>();
-            services.AddTransient<ISweetStorage, SweetStorage>();
-            services.AddTransient<OrderLogic>();
-            services.AddTransient<ClientLogic>();
-            services.AddTransient<StorageLogic>();
-            services.AddTransient<PastryLogic>();
-            services.AddTransient<SweetLogic>();
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,11 +33,24 @@ namespace CandyShopRestApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-            app.UseHttpsRedirection(); app.UseRouting(); app.UseAuthorization();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

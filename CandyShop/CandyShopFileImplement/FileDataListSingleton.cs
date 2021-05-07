@@ -50,6 +50,7 @@ namespace CandyShopFileImplement
             SaveOrders();
             SavePastrys();
             SaveStorages();
+            SaveClients();
         }
 
         private List<Client> LoadClients()
@@ -142,6 +143,7 @@ namespace CandyShopFileImplement
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
                         PastryId = Convert.ToInt32(elem.Element("PastryId").Value),
+                        ClientId = Convert.ToInt32(elem.Element("ClientId")?.Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = status,
@@ -246,6 +248,7 @@ namespace CandyShopFileImplement
                     xElement.Add(new XElement("Order",
                  new XAttribute("Id", order.Id),
                  new XElement("PastryId", order.PastryId),
+                 new XElement("ClientId", order.ClientId),
                  new XElement("Count", order.Count),
                  new XElement("Sum", order.Sum),
                  new XElement("Status", order.Status),

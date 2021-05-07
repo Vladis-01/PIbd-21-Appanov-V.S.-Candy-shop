@@ -1,0 +1,65 @@
+﻿@using CandyShopBusinessLogic.ViewModels
+@model List<StorageViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Склады</h1>
+</div>
+<div class="text-center">
+    @{
+        if (Model == null)
+        {
+            <h3 class="display-4">Enter</h3>
+            return;
+        }
+        <p>
+            <a asp-action="Create">Создать склад</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Num
+                    </th>
+                    <th>
+                        Warehouse name
+                    </th>
+                    <th>
+                        Manager name
+                    </th>
+                    <th>
+                        Date Create
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StorageName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StorageManager)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreate)
+                        </td>
+                        <td>
+                            <a asp-action="Update" asp-route-storageId="@item.Id" asp-route-name="@item.StorageName" asp-route-responsible="@item.StorageManager">Update</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
