@@ -181,7 +181,7 @@ namespace CandyShopListImplement.Implements
             };
         }
 
-        public bool TakeFromStorage(Dictionary<int, (string, int)> sweets, int count)
+        public void CheckSweets(PastryViewModel model, int sweetCountInOrder)
         {
             throw new NotImplementedException();
         }

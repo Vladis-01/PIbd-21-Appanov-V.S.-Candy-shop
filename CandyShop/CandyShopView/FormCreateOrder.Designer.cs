@@ -45,7 +45,7 @@
             this.labelPastry.Name = "labelPastry";
             this.labelPastry.Size = new System.Drawing.Size(79, 13);
             this.labelPastry.TabIndex = 0;
-            this.labelPastry.Text = "Кондитерское изделие ";
+            this.labelPastry.Text = "Кондитерское изделие";
             // 
             // labelCount
             // 

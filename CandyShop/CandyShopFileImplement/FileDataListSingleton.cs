@@ -29,6 +29,7 @@ namespace CandyShopFileImplement
             Orders = LoadOrders();
             Pastrys = LoadPastrys();
             Storages = LoadStorages();
+
         }
 
         public static FileDataListSingleton GetInstance()
