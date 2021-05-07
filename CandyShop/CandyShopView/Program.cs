@@ -14,7 +14,7 @@ namespace CandyShopView
         /// </summary>
         [STAThread]
         static void Main()
-        {
+         {
             var container = BuildUnityContainer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -38,6 +38,8 @@ namespace CandyShopView
 HierarchicalLifetimeManager());
             currentContainer.RegisterType<IClientStorage, ClientStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ClientLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IImplementerStorage, ImplementerStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ImplementerLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
