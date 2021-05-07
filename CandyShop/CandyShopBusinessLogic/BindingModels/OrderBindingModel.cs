@@ -17,6 +17,8 @@ namespace CandyShopBusinessLogic.BindingModels
         [DataMember]
         public int? ClientId { get; set; }
         [DataMember]
+        public int? ImplementerId { get; set; }
+        [DataMember]
         public int Count { get; set; }
         [DataMember]
         public decimal Sum { get; set; }
@@ -30,6 +32,9 @@ namespace CandyShopBusinessLogic.BindingModels
         public DateTime? DateFrom { get; set; }
         [DataMember]
         public DateTime? DateTo { get; set; }
+        [DataMember]
+        public bool? FreeOrders { get; set; }
+
 
     }
 

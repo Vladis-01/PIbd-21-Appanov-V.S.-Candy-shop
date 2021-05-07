@@ -18,6 +18,8 @@ namespace CandyShopBusinessLogic.ViewModels
         [DataMember]
         public int PastryId { get; set; }
         [DataMember]
+        public int? ImplementerId { get; set; }
+        [DataMember]
         [DisplayName("Клиент")]
         public string ClientFIO { get; set; }
         [DataMember]
@@ -38,6 +40,9 @@ namespace CandyShopBusinessLogic.ViewModels
         [DataMember]
         [DisplayName("Дата выполнения")]
         public DateTime? DateImplement { get; set; }
+        [DataMember]
+        [DisplayName("Исполнитель")]
+        public string ImplementerName { get; set; }
     }
 
 }
