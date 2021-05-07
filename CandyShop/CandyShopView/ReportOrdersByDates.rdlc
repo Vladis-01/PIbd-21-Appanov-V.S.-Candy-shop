@@ -97,7 +97,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Orders Count</Value>
+                                  <Value>Номер заказа</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -127,7 +127,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Date Create</Value>
+                                  <Value>Дата создания</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -157,7 +157,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total Sum</Value>
+                                  <Value>Сумма</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -296,8 +296,8 @@
             </TablixRowHierarchy>
             <DataSetName>DataSetOrdersByDates</DataSetName>
             <Top>1.16099cm</Top>
-            <Height>2.72521cm</Height>
-            <Width>16.51cm</Width>
+            <Height>2.7252cm</Height>
+            <Width>16.50999cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>

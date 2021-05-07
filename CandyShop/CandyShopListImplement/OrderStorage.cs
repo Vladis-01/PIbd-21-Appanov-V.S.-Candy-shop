@@ -34,7 +34,6 @@ namespace CandyShopListImplement.Implements
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                PastryName = order.PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
@@ -62,7 +61,7 @@ namespace CandyShopListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                if (order.Id == model.Id && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                 {
                     result.Add(CreateModel(order));
                 }

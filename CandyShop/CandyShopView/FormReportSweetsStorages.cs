@@ -41,14 +41,14 @@ namespace CandyShopView
                         {
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }
-                        dataGridView.Rows.Add(new object[] { "Total", "", elem.TotalCount });
+                        dataGridView.Rows.Add(new object[] { "Сумма", "", elem.TotalCount });
                         dataGridView.Rows.Add(new object[] { });
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
         }
@@ -65,12 +65,12 @@ namespace CandyShopView
                         {
                             FileName = dialog.FileName
                         });
-                        MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
+                        MessageBox.Show("Добавлено", "Успешно", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                        MessageBoxIcon.Error);
                     }
                 }

@@ -62,7 +62,7 @@
             this.Storage.Name = "Storage";
             this.Storage.ReadOnly = true;
             // 
-            // Component
+            // Sweet
             // 
             this.Sweet.HeaderText = "Сладость";
             this.Sweet.Name = "Sweet";
@@ -80,18 +80,18 @@
             this.buttonSaveToExcel.Name = "buttonSaveToExcel";
             this.buttonSaveToExcel.Size = new System.Drawing.Size(158, 28);
             this.buttonSaveToExcel.TabIndex = 1;
-            this.buttonSaveToExcel.Text = "Save to Excel";
+            this.buttonSaveToExcel.Text = "Сохранить в Excel";
             this.buttonSaveToExcel.UseVisualStyleBackColor = true;
             this.buttonSaveToExcel.Click += new System.EventHandler(this.ButtonSaveToExcel_Click);
             // 
-            // FormReportComponentsByStorages
+            // FormReportSweetsStorages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 625);
             this.Controls.Add(this.buttonSaveToExcel);
             this.Controls.Add(this.dataGridView);
-            this.Name = "FormReportSweetStorages";
+            this.Name = "FormReportSweetsStorages";
             this.Text = "Сладости по складам";
             this.Load += new System.EventHandler(this.FormReportPastrySweets_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

@@ -24,8 +24,8 @@ namespace CandyShopView
                     dataGridView.Rows.Clear();
                     foreach (var elem in dict)
                     { 
-                        dataGridView.Rows.Add(new object[] { elem.SweetName, "", "" });
-                        foreach (var listElem in elem.Pastrys)
+                        dataGridView.Rows.Add(new object[] { elem.PastryName, "", "" });
+                        foreach (var listElem in elem.Sweets)
                         {
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }

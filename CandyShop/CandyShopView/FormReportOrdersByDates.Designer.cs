@@ -49,7 +49,7 @@
             this.buttonToPdf.Name = "buttonToPdf";
             this.buttonToPdf.Size = new System.Drawing.Size(107, 23);
             this.buttonToPdf.TabIndex = 5;
-            this.buttonToPdf.Text = "To Pdf";
+            this.buttonToPdf.Text = "В Pdf";
             this.buttonToPdf.UseVisualStyleBackColor = true;
             this.buttonToPdf.Click += new System.EventHandler(this.buttonToPdf_Click);
             // 

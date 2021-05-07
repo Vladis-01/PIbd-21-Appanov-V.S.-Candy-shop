@@ -45,12 +45,12 @@ namespace CandyShopView
                         {
                             FileName = dialog.FileName
                         });
-                        MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
+                        MessageBox.Show("Добавлено", "Успешно", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace CandyShopView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
         }

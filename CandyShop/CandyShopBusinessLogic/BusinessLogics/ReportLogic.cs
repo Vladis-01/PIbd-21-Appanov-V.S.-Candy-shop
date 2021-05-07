@@ -34,23 +34,18 @@ namespace CandyShopBusinessLogic.BusinessLogics
             var sweets = _sweetStorage.GetFullList(); 
             var pastrys = _pastryStorage.GetFullList();
             var list = new List<ReportPastrySweetViewModel>();
-            foreach (var sweet in sweets)
+            foreach (var pastry in pastrys)
             {
                 var record = new ReportPastrySweetViewModel
                 {
-                    SweetName = sweet.SweetName,
-                    Pastrys = new
-                List<Tuple<string, int>>(),
+                    PastryName = pastry.PastryName,
+                    Sweets = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var pastry in pastrys)
+                foreach (var sweet in pastry.PastrySweets)
                 {
-                    if (pastry.PastrySweets.ContainsKey(sweet.Id))
-                    {
-                        record.Pastrys.Add(new Tuple<string, int>(pastry.PastryName,
-                        pastry.PastrySweets[sweet.Id].Item2));
-                        record.TotalCount += pastry.PastrySweets[sweet.Id].Item2;
-                    }
+                    record.Sweets.Add(new Tuple<string, int>(sweet.Value.Item1, sweet.Value.Item2));
+                    record.TotalCount += sweet.Value.Item2;
                 }
                 list.Add(record);
             }

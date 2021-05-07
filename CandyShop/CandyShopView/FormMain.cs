@@ -171,7 +171,7 @@ namespace CandyShopView
                     {
                         FileName = dialog.FileName
                     });
-                    MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 }
             }

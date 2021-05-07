@@ -291,6 +291,9 @@
     <EmbeddedResource Include="FormReportOrdersByDates.resx">
       <DependentUpon>FormReportOrdersByDates.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportSweetsStorages.resx">
+      <DependentUpon>FormReportSweetsStorages.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStorage.resx">
       <DependentUpon>FormStorage.cs</DependentUpon>
     </EmbeddedResource>
