@@ -36,7 +36,7 @@ namespace CandyShopRestApi.Controllers
         public void AddSweetsToStorage(ReplenishStorageBindingModel model) => _storage.Replenishment(model);
 
         [HttpGet]
-        public StorageViewModel GetStorage(int storgaeId) => _storage.Read(new StorageBindingModel { Id = storgaeId })?[0];
+        public StorageViewModel GetStorage(int storageId) => _storage.Read(new StorageBindingModel { Id = storageId })?[0];
 
         [HttpGet]
         public List<SweetViewModel> GetSweetList() => _sweet.Read(null);

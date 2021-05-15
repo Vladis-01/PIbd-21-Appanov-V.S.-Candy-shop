@@ -47,7 +47,6 @@ namespace StorageEmployeeApp.Controllers
 		{
 			if (!string.IsNullOrEmpty(password))
 			{
-				password = Program.CurrentPassword;
 				if (password != Program.CurrentPassword)
 				{
 					throw new Exception("Invalid password");

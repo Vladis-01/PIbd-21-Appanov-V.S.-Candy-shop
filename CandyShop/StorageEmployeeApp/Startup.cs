@@ -16,6 +16,7 @@ namespace StorageEmployeeApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ApiEmployee.Connect(configuration);
         }
 
         public IConfiguration Configuration { get; }
