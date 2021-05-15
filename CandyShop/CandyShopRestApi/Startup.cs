@@ -24,9 +24,13 @@ namespace CandyShopRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IPastryStorage, PastryStorage>();
+            services.AddTransient<IStorageStorage, StorageStorage>();
+            services.AddTransient<ISweetStorage, SweetStorage>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
+            services.AddTransient<StorageLogic>();
             services.AddTransient<PastryLogic>();
+            services.AddTransient<SweetLogic>();
             services.AddControllers().AddNewtonsoftJson();
         }
 

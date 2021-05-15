@@ -127,6 +127,54 @@ namespace CandyShopDatabaseImplement.Migrations
                     b.ToTable("PastrySweets");
                 });
 
+            modelBuilder.Entity("CandyShopDatabaseImplement.Models.Storage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StorageManager")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StorageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Storages");
+                });
+
+            modelBuilder.Entity("CandyShopDatabaseImplement.Models.StorageSweet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StorageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SweetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StorageId");
+
+                    b.HasIndex("SweetId");
+
+                    b.ToTable("StorageSweets");
+                });
+
             modelBuilder.Entity("CandyShopDatabaseImplement.Models.Sweet", b =>
                 {
                     b.Property<int>("Id")
@@ -196,6 +244,21 @@ namespace CandyShopDatabaseImplement.Migrations
 
                     b.HasOne("CandyShopDatabaseImplement.Models.Sweet", "Sweet")
                         .WithMany("PastrySweets")
+                        .HasForeignKey("SweetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CandyShopDatabaseImplement.Models.StorageSweet", b =>
+                {
+                    b.HasOne("CandyShopDatabaseImplement.Models.Storage", "Storage")
+                        .WithMany("StorageSweets")
+                        .HasForeignKey("StorageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CandyShopDatabaseImplement.Models.Sweet", "Sweet")
+                        .WithMany("StorageSweets")
                         .HasForeignKey("SweetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

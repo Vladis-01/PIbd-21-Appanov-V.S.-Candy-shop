@@ -30,7 +30,7 @@ namespace CandyShopFileImplement.Implements
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
-            if (model == null || model.DateFrom == null || model.DateTo == null)
+            if (model == null)
             {
                 return null;
             }

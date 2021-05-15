@@ -9,11 +9,15 @@ namespace CandyShopBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly IPastryStorage _pastryStorage;
+        private readonly IStorageStorage _storageStorage;
         private readonly object locker = new object();
-
-        public OrderLogic(IOrderStorage orderStorage)
+      
+        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage)       
         {
             _orderStorage = orderStorage;
+            _pastryStorage = pastryStorage;
+            _storageStorage = storageStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -73,6 +77,23 @@ namespace CandyShopBusinessLogic.BusinessLogics
                     Status = OrderStatus.Выполняется
                 });
             }
+            var pastry = _pastryStorage.GetElement(new PastryBindingModel
+            {
+                Id = order.PastryId
+            });
+
+            _storageStorage.CheckSweets(pastry, order.Count);
+
+            _orderStorage.Update(new OrderBindingModel
+            {
+                Id = order.Id,
+                PastryId = order.PastryId,
+                ClientId = order.ClientId,
+                Count = order.Count,
+                Sum = order.Sum,
+                DateCreate = order.DateCreate,
+                Status = OrderStatus.Выполняется
+            });
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
