@@ -11,7 +11,9 @@ namespace CandyShopBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IPastryStorage _pastryStorage;
         private readonly IStorageStorage _storageStorage;
-        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage)
+        private readonly object locker = new object();
+      
+        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage)       
         {
             _orderStorage = orderStorage;
             _pastryStorage = pastryStorage;
@@ -43,20 +45,38 @@ namespace CandyShopBusinessLogic.BusinessLogics
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            var order = _orderStorage.GetElement(new OrderBindingModel
+            lock (locker)
             {
-                Id =
-           model.OrderId
-            });
-            if (order == null)
-            {
-                throw new Exception("Не найден заказ");
+                var order = _orderStorage.GetElement(new OrderBindingModel
+                {
+                    Id =
+                model.OrderId
+                });
+                if (order == null)
+                {
+                    throw new Exception("Не найден заказ");
+                }
+                if (order.Status != OrderStatus.Принят)
+                {
+                    throw new Exception("Заказ не в статусе \"Принят\"");
+                }
+                if (order.ImplementerId.HasValue)
+                {
+                    throw new Exception("У заказа уже есть исполнитель");
+                }
+                _orderStorage.Update(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    ClientId = order.ClientId,
+                    ImplementerId = model.ImplementerId,
+                    PastryId = order.PastryId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
+                    Status = OrderStatus.Выполняется
+                });
             }
-            if (order.Status != OrderStatus.Принят)
-            {
-                throw new Exception("Заказ не в статусе \"Принят\"");
-            }
-
             var pastry = _pastryStorage.GetElement(new PastryBindingModel
             {
                 Id = order.PastryId
@@ -95,6 +115,7 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 Id = order.Id,
                 PastryId = order.PastryId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -122,6 +143,7 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 Id = order.Id,
                 PastryId = order.PastryId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,

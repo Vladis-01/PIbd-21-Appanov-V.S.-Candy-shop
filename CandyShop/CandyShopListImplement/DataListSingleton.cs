@@ -10,6 +10,7 @@ namespace CandyShopListImplement
         public List<Pastry> Pastrys { get; set; }
         public List<Storage> Storages { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         private DataListSingleton()
         {
             Sweets = new List<Sweet>();
@@ -17,6 +18,7 @@ namespace CandyShopListImplement
             Pastrys = new List<Pastry>();
             Storages = new List<Storage>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
         }
         public static DataListSingleton GetInstance()
         {
