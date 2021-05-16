@@ -56,8 +56,8 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 var order = context.Orders
-                    .Include(rec => rec.Pastry)
                     .Include(rec => rec.Client)
+                    .Include(rec => rec.Pastry)
                     .Include(rec => rec.Implementer)
                 .FirstOrDefault(rec => rec.Id == model.Id);
 
@@ -119,6 +119,7 @@ namespace CandyShopDatabaseImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
+         //   Console.WriteLine(order.Implementer.Name);
             return new OrderViewModel
             {
                 Id = order.Id,
