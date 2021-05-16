@@ -35,33 +35,13 @@ namespace CandyShopDatabaseImplement.Implements
                 .Include(rec => rec.Pastry)
                 .Include(rec => rec.Client)
                 .Include(rec => rec.Implementer)
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
-                rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <=
-                model.DateTo.Value.Date) ||
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
                 (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
-                (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status ==
-                OrderStatus.Принят) ||
-                (model.ImplementerId.HasValue && rec.ImplementerId ==
-                model.ImplementerId && rec.Status == OrderStatus.Выполняется))
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    Count = rec.Count,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                    PastryId = rec.PastryId,
-                    PastryName = rec.Pastry.PastryName,
-                    ClientId = rec.ClientId,
-                    ClientFIO = rec.Client.ClientFIO,
-                    ImplementerId = rec.ImplementerId,
-                    ImplementerName = rec.ImplementerId.HasValue ?
-rec.Implementer.Name : string.Empty,
-                    Status = rec.Status,
-                    Sum = rec.Sum
-                })
-                .ToList();
+                (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.ТребуютсяСладости))
+                .Select(CreateModel).ToList();
             }
 
         }
@@ -103,15 +83,20 @@ rec.Implementer.Name : string.Empty,
             {
                 var element = context.Orders.Include(rec => rec.Client)
                    .Include(rec => rec.Pastry)
+                   .Include(rec => rec.Implementer)
                    .FirstOrDefault(rec => rec.Id == model.Id);
 
                 if (element == null)
                 {
-                    throw new Exception("Element not found");
+                    throw new Exception("Элемент не найден");
                 }
                 if (!model.ClientId.HasValue)
                 {
                     model.ClientId = element.ClientId;
+                }
+                if (!model.ImplementerId.HasValue)
+                {
+                    model.ImplementerId = element.ImplementerId;
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
@@ -146,7 +131,7 @@ rec.Implementer.Name : string.Empty,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order?.DateImplement,                
+                DateImplement = order.DateImplement,                
                 ImplementerName = order.ImplementerId.HasValue ?
                     order.Implementer.Name : string.Empty
             };

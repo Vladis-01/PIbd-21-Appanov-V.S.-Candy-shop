@@ -170,7 +170,7 @@ namespace CandyShopView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    _report.SaveStoragesToWordFile(new ReportBindingModel
+                    reportLogic.SaveStoragesToWordFile(new ReportBindingModel
                     {
                         FileName = dialog.FileName
                     });

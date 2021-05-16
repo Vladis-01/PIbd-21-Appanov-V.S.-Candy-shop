@@ -47,6 +47,7 @@ namespace CandyShopBusinessLogic.BusinessLogics
         {
             lock (locker)
             {
+                OrderStatus status = OrderStatus.Выполняется;
                 var order = _orderStorage.GetElement(new OrderBindingModel
                 {
                     Id =
@@ -76,24 +77,29 @@ namespace CandyShopBusinessLogic.BusinessLogics
                     DateImplement = DateTime.Now,
                     Status = OrderStatus.Выполняется
                 });
+
+                var pastry = _pastryStorage.GetElement(new PastryBindingModel
+                {
+                    Id = order.PastryId
+                });
+
+                if (!_storageStorage.CheckSweets(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }), order.Count))
+                {
+                    status = OrderStatus.ТребуютсяСладости;
+                }
+
+                _orderStorage.Update(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    PastryId = order.PastryId,
+                    ClientId = order.ClientId,
+                    ImplementerId = model.ImplementerId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    Status = status
+                });
             }
-            var pastry = _pastryStorage.GetElement(new PastryBindingModel
-            {
-                Id = order.PastryId
-            });
-
-            _storageStorage.CheckSweets(pastry, order.Count);
-
-            _orderStorage.Update(new OrderBindingModel
-            {
-                Id = order.Id,
-                PastryId = order.PastryId,
-                ClientId = order.ClientId,
-                Count = order.Count,
-                Sum = order.Sum,
-                DateCreate = order.DateCreate,
-                Status = OrderStatus.Выполняется
-            });
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -106,6 +112,12 @@ namespace CandyShopBusinessLogic.BusinessLogics
             {
                 throw new Exception("Не найден заказ");
             }
+
+            if (order.Status == OrderStatus.ТребуютсяСладости && _storageStorage.CheckSweets(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }), order.Count))
+            {
+                order.Status = OrderStatus.Выполняется;
+            }
+
             if (order.Status != OrderStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
@@ -119,7 +131,6 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
                 Status = OrderStatus.Готов
             });
         }
