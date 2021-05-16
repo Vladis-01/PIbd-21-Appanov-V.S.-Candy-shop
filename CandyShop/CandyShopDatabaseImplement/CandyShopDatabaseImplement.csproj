@@ -159,7 +159,6 @@
   <ItemGroup>
     <Compile Include="CandyShopDatabase.cs" />
     <Compile Include="Implement\ClientStorage.cs" />
-    <Compile Include="Implement\ImplementerStorage.cs" />
     <Compile Include="Implement\OrderStorage.cs" />
     <Compile Include="Implement\PastryStorage.cs" />
     <Compile Include="Implement\StorageStorage.cs" />
@@ -170,7 +169,6 @@
     </Compile>
     <Compile Include="Migrations\CandyShopDatabaseModelSnapshot.cs" />
     <Compile Include="models\Client.cs" />
-    <Compile Include="models\Implementer.cs" />
     <Compile Include="models\Order.cs" />
     <Compile Include="models\Pastry.cs" />
     <Compile Include="models\PastrySweet.cs" />

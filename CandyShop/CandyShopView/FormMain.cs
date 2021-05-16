@@ -10,16 +10,15 @@ namespace CandyShopView
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-        private readonly OrderLogic orderLogic;
-        private readonly ReportLogic reportLogic;
-        private readonly WorkModeling workModeling;
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling)
+        private readonly OrderLogic _orderLogic;
+        private readonly PastryLogic _pastryLogic;
+        private readonly ReportLogic _report;
+        public FormMain(OrderLogic orderLogic, PastryLogic pastryLogic, ReportLogic report)
         {
             InitializeComponent();
-            this.orderLogic = orderLogic;
-            this.reportLogic = reportLogic;
-            this.workModeling = workModeling;
-            LoadData();
+            this._orderLogic = orderLogic;
+            this._pastryLogic = pastryLogic;
+            this._report = report;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -29,14 +28,12 @@ namespace CandyShopView
         {
             try
             {
-                var ordersList = orderLogic.Read(null);
+                var ordersList = _orderLogic.Read(null);
                 if (ordersList != null)
                 {
                     dataGridView.DataSource = ordersList;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace CandyShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
                     {
                         OrderId =
                    id
@@ -89,7 +86,7 @@ namespace CandyShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    orderLogic.FinishOrder(new ChangeStatusBindingModel
+                    _orderLogic.FinishOrder(new ChangeStatusBindingModel
                     {
                         OrderId = id
                     });
@@ -109,7 +106,7 @@ namespace CandyShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    orderLogic.PayOrder(new ChangeStatusBindingModel { OrderId = id });
+                    _orderLogic.PayOrder(new ChangeStatusBindingModel { OrderId = id });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -143,7 +140,7 @@ namespace CandyShopView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    reportLogic.SavePastrysToWordFile(new ReportBindingModel
+                    _report.SavePastrysToWordFile(new ReportBindingModel
                     {
                         FileName =
                     dialog.FileName
@@ -194,18 +191,6 @@ namespace CandyShopView
         private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormClients>();
-            form.ShowDialog();
-        }
-
-        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            workModeling.DoWork();
-            LoadData();
-        }
-
-        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormImplementers>();
             form.ShowDialog();
         }
     }
