@@ -54,13 +54,16 @@ HierarchicalLifetimeManager());
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPastryStorage, PastryStorage>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IStorageStorage, StorageStorage>(new
+           HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMessageInfoStorage, MessageInfoStorage>(new
 HierarchicalLifetimeManager());
-
             currentContainer.RegisterType<SweetLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<PastryLogic>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<StorageLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<ReportLogic>(new
 HierarchicalLifetimeManager());
@@ -68,8 +71,7 @@ HierarchicalLifetimeManager());
             currentContainer.RegisterType<ClientLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IImplementerStorage, ImplementerStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ImplementerLogic>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<WorkModeling>(new
-HierarchicalLifetimeManager());
+            currentContainer.RegisterType<WorkModeling>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<MailLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }

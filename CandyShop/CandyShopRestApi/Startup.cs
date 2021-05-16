@@ -27,10 +27,14 @@ namespace CandyShopRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IPastryStorage, PastryStorage>();
+            services.AddTransient<IStorageStorage, StorageStorage>();
+            services.AddTransient<ISweetStorage, SweetStorage>();
             services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
+            services.AddTransient<StorageLogic>();
             services.AddTransient<PastryLogic>();
+            services.AddTransient<SweetLogic>();
             services.AddTransient<MailLogic>();
 
             MailLogic.MailConfig(new MailConfig
@@ -48,7 +52,6 @@ namespace CandyShopRestApi
                 Storage = new MessageInfoStorage(),
                 ClientStorage = new ClientStorage()
             }, 0, 100000);
-
             services.AddControllers().AddNewtonsoftJson();
         }
 

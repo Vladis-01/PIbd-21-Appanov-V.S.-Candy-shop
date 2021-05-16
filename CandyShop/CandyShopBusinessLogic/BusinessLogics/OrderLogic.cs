@@ -10,12 +10,16 @@ namespace CandyShopBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly IPastryStorage _pastryStorage;
+        private readonly IStorageStorage _storageStorage;
         private readonly IClientStorage _clientStorage;
         private readonly object locker = new object();
-
-        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage)
+      
+        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage, IClientStorage clientStorage)       
         {
             _orderStorage = orderStorage;
+            _pastryStorage = pastryStorage;
+            _storageStorage = storageStorage;
             _clientStorage = clientStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -57,6 +61,7 @@ model.ClientId
         {
             lock (locker)
             {
+                OrderStatus status = OrderStatus.Выполняется;
                 var order = _orderStorage.GetElement(new OrderBindingModel
                 {
                     Id =
@@ -74,25 +79,34 @@ model.ClientId
                 {
                     throw new Exception("У заказа уже есть исполнитель");
                 }
+
+                var pastry = _pastryStorage.GetElement(new PastryBindingModel
+                {
+                    Id = order.PastryId
+                });
+
+                if (!_storageStorage.CheckSweets(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }), order.Count))
+                {
+                    status = OrderStatus.ТребуютсяСладости;
+                }
+
                 _orderStorage.Update(new OrderBindingModel
                 {
                     Id = order.Id,
+                    PastryId = order.PastryId,
                     ClientId = order.ClientId,
                     ImplementerId = model.ImplementerId,
-                    PastryId = order.PastryId,
                     Count = order.Count,
                     Sum = order.Sum,
                     DateCreate = order.DateCreate,
-                    DateImplement = DateTime.Now,
-                    Status = OrderStatus.Выполняется
-                });
-
+                    Status = status
+                      });
+              
                 MailLogic.MailSendAsync(new MailSendInfo
                 {
                     MailAddress = _clientStorage.GetElement(new ClientBindingModel
                     {
-                        Id =
-order.ClientId
+                        Id = order.ClientId
                     })?.Email,
                     Subject = $"Заказ №{order.Id}",
                     Text = $"Заказ №{order.Id} передан в работу."
@@ -110,6 +124,12 @@ order.ClientId
             {
                 throw new Exception("Не найден заказ");
             }
+
+            if (order.Status == OrderStatus.ТребуютсяСладости && _storageStorage.CheckSweets(_pastryStorage.GetElement(new PastryBindingModel { Id = order.PastryId }), order.Count))
+            {
+                order.Status = OrderStatus.Выполняется;
+            }
+
             if (order.Status != OrderStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
@@ -123,7 +143,6 @@ order.ClientId
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
                 Status = OrderStatus.Готов
             });
 

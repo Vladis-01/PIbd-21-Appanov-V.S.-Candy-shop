@@ -13,5 +13,7 @@ namespace CandyShopDatabaseImplement.Models
         public string SweetName { get; set; }
         [ForeignKey("SweetId")]
         public virtual List<PastrySweet> PastrySweets { get; set; }
+        [ForeignKey("SweetId")]
+        public virtual List<StorageSweet> StorageSweets { get; set; }
     }
 }
