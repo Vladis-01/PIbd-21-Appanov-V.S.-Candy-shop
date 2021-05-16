@@ -44,6 +44,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="ClientStorage.cs" />
     <Compile Include="FileDataListSingleton.cs" />
+    <Compile Include="Implementer.cs" />
     <Compile Include="MessageInfo.cs" />
     <Compile Include="MessageInfoStorage.cs" />
     <Compile Include="Order.cs" />
@@ -51,10 +52,8 @@
     <Compile Include="Pastry.cs" />
     <Compile Include="PastryStorage .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-
     <Compile Include="Storage.cs" />
     <Compile Include="StorageStorage.cs" />
-
     <Compile Include="Sweet.cs" />
     <Compile Include="SweetStorage.cs" />
   </ItemGroup>

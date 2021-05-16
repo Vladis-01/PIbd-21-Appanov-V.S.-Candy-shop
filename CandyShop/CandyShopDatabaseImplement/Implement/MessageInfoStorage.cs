@@ -17,15 +17,8 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 return context.Messages
-                .Select(rec => new MessageInfoViewModel
-                {
-                    MessageId = rec.MessageId,
-                    SenderName = rec.SenderName,
-                    DateDelivery = rec.DateDelivery,
-                    Subject = rec.Subject,
-                    Body = rec.Body
-                })
-                .ToList();
+                                   .Select(CreateModel)
+                                  .ToList();
             }
         }
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
@@ -36,18 +29,18 @@ namespace CandyShopDatabaseImplement.Implements
             }
             using (var context = new CandyShopDatabase())
             {
-                return context.Messages
-                .Where(rec => (model.ClientId.HasValue && rec.ClientId ==
-                model.ClientId) ||
-                (!model.ClientId.HasValue && rec.DateDelivery.Date ==
-                model.DateDelivery.Date)).Select(rec => new MessageInfoViewModel
+                if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
                 {
-                    MessageId = rec.MessageId,
-                    SenderName = rec.SenderName,
-                    DateDelivery = rec.DateDelivery,
-                    Subject = rec.Subject,
-                    Body = rec.Body
-                }).ToList();
+                    return context.Messages.Skip((int)model.ToSkip).Take((int)model.ToTake)
+                    .Select(CreateModel).ToList();
+                }
+                return context.Messages
+                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
+                .Skip(model.ToSkip ?? 0)
+                .Take(model.ToTake ?? context.Messages.Count())
+                .Select(CreateModel)
+                .ToList();
             }
         }
         public void Insert(MessageInfoBindingModel model)
@@ -58,7 +51,7 @@ namespace CandyShopDatabaseImplement.Implements
                 rec.MessageId == model.MessageId);
                 if (element != null)
                 {
-                    throw new Exception("Уже есть письмо с таким идентификатором");
+                    return;
                 }
                 context.Messages.Add(new MessageInfo
                 {
@@ -71,6 +64,18 @@ namespace CandyShopDatabaseImplement.Implements
                 });
                 context.SaveChanges();
             }
+        }
+
+        private MessageInfoViewModel CreateModel(MessageInfo model)
+        {
+            return new MessageInfoViewModel
+            {
+                MessageId = model.MessageId,
+                SenderName = model.SenderName,
+                DateDelivery = model.DateDelivery,
+                Subject = model.Subject,
+                Body = model.Body
+            };
         }
     }
 }

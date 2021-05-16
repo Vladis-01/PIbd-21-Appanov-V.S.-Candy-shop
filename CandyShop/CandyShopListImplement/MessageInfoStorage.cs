@@ -22,38 +22,44 @@ namespace CandyShopListImplement.Implements
             var result = new List<MessageInfoViewModel>();
             foreach (var msg in source.Messages)
             {
-                result.Add(new MessageInfoViewModel
-                {
-                    MessageId = msg.MessageId,
-                    SenderName = msg.SenderName,
-                    DateDelivery = msg.DateDelivery,
-                    Subject = msg.Subject,
-                    Body = msg.Body
-                });
+                result.Add(CreateModel(msg));
             }
             return result;
         }
 
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
+            int toSkip = model.ToSkip ?? 0;
+            int toTake = model.ToTake ?? source.Messages.Count;
             if (model == null)
             {
                 return null;
             }
             var result = new List<MessageInfoViewModel>();
+            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+            {
+                foreach (var msg in source.Messages)
+                {
+                    if (toSkip > 0) { toSkip--; continue; }
+                    if (toTake > 0)
+                    {
+                        result.Add(CreateModel(msg));
+                        toTake--;
+                    }
+                }
+                return result;
+            }
             foreach (var msg in source.Messages)
             {
                 if ((model.ClientId.HasValue && msg.ClientId == model.ClientId) ||
                     (!model.ClientId.HasValue && msg.DateDelivery.Date == model.DateDelivery.Date))
                 {
-                    result.Add(new MessageInfoViewModel
+                    if (toSkip > 0) { toSkip--; continue; }
+                    if (toTake > 0)
                     {
-                        MessageId = msg.MessageId,
-                        SenderName = msg.SenderName,
-                        DateDelivery = msg.DateDelivery,
-                        Subject = msg.Subject,
-                        Body = msg.Body
-                    });
+                        result.Add(CreateModel(msg));
+                        toTake--;
+                    }
                 }
             }
             return result;
@@ -84,6 +90,18 @@ namespace CandyShopListImplement.Implements
                 Body = model.Body
             });
 
+        }
+
+        private MessageInfoViewModel CreateModel(MessageInfo model)
+        {
+            return new MessageInfoViewModel
+            {
+                MessageId = model.MessageId,
+                SenderName = model.SenderName,
+                DateDelivery = model.DateDelivery,
+                Subject = model.Subject,
+                Body = model.Body
+            };
         }
     }
 }

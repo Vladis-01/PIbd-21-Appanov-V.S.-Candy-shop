@@ -4,6 +4,7 @@ using CandyShopBusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace CandyShopRestApi.Controllers
@@ -16,18 +17,26 @@ namespace CandyShopRestApi.Controllers
         private readonly MailLogic _logicM;
         private readonly int _passwordMaxLength = 50;
         private readonly int _passwordMinLength = 10;
+        private readonly int mailsOnPage = 2;
 
         public ClientController(ClientLogic logic, MailLogic logicM)
         {
             _logic = logic;
             _logicM = logicM;
+            if (mailsOnPage < 1) { 
+                mailsOnPage = 5; 
+            }
         }
         [HttpGet]
         public ClientViewModel Login(string login, string password) => _logic.Read(new ClientBindingModel { Email = login, Password = password })?[0];
 
         [HttpGet]
-        public List<MessageInfoViewModel> GetMessages(int clientId) =>
-_logicM.Read(new MessageInfoBindingModel { ClientId = clientId });
+        public (List<MessageInfoViewModel>, bool) GetMessages(int clientId, int page)
+        {
+            var list = _logicM.Read(new MessageInfoBindingModel { ClientId = clientId, ToSkip = (page - 1) * mailsOnPage, ToTake = mailsOnPage + 1 }).ToList();
+            var hasNext = !(list.Count() <= mailsOnPage);
+            return (list.Take(mailsOnPage).ToList(), hasNext);
+        }
 
         [HttpPost]
         public void Register(ClientBindingModel model)
