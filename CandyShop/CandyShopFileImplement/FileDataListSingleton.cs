@@ -17,13 +17,13 @@ namespace CandyShopFileImplement
         private readonly string OrderFileName = "Order.xml";
         private readonly string PastryFileName = "Pastry.xml";
         private readonly string ClientFileName = "Client.xml";
-        private readonly string ImplementerFileName = "Implementer.xml";
+        private readonly string MessageFileName = "Message.xml";
 
         public List<Sweet> Sweets { get; set; }
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastrys { get; set; }
         public List<Client> Clients { get; set; }
-        public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> Messages { get; set; }
 
         private FileDataListSingleton()
         {
@@ -31,7 +31,7 @@ namespace CandyShopFileImplement
             Orders = LoadOrders();
             Pastrys = LoadPastrys();
             Clients = LoadClients();
-            Implementers = LoadImplementers();
+            Messages = LoadMessages();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -49,8 +49,7 @@ namespace CandyShopFileImplement
             SaveSweets();
             SaveOrders();
             SavePastrys();
-            SaveClients();
-            SaveImplementers();
+            SaveMessages();
         }
 
         private List<Client> LoadClients()
@@ -153,10 +152,6 @@ namespace CandyShopFileImplement
                     {
                         order.DateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value);
                     }
-                    if (!string.IsNullOrEmpty(elem.Element("ImplementerId").Value))
-                    {
-                        order.ImplementerId = Convert.ToInt32(elem.Element("ImplementerId").Value);
-                    }
                     list.Add(order);
                 }
             }
@@ -191,21 +186,23 @@ namespace CandyShopFileImplement
             return list;
         }
 
-        private List<Implementer> LoadImplementers()
+        private List<MessageInfo> LoadMessages()
         {
-            var list = new List<Implementer>();
-            if (File.Exists(ImplementerFileName))
+            var list = new List<MessageInfo>();
+            if (File.Exists(OrderFileName))
             {
-                XDocument xDocument = XDocument.Load(ImplementerFileName);
-                var xElements = xDocument.Root.Elements("Implementers").ToList();
+                XDocument xDocument = XDocument.Load(MessageFileName);
+                var xElements = xDocument.Root.Elements("Message").ToList();
                 foreach (var elem in xElements)
                 {
-                    list.Add(new Implementer
+                    list.Add(new MessageInfo
                     {
-                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        Name = elem.Element("Name").Value,
-                        WorkingTime = Convert.ToInt32(elem.Element("WorkingTime").Value),
-                        PauseTime = Convert.ToInt32(elem.Element("PauseTime").Value)
+                        MessageId = elem.Element("MessageId")?.Value,
+                        Body = elem.Element("Body")?.Value,
+                        ClientId = Convert.ToInt32(elem.Element("ClientId")?.Value),
+                        Subject = elem.Element("Subject")?.Value,
+                        SenderName = elem.Element("SenderName")?.Value,
+                        DateDelivery = Convert.ToDateTime(elem.Element("DateDelivery")?.Value)
                     });
                 }
             }
@@ -225,24 +222,6 @@ namespace CandyShopFileImplement
                 }
                 XDocument xDocument = new XDocument(xElement); 
                 xDocument.Save(SweetFileName);
-            }
-        }
-
-        private void SaveImplementers()
-        {
-            if (Implementers != null)
-            {
-                var xElement = new XElement("Implementers");
-                foreach (var client in Implementers)
-                {
-                    xElement.Add(new XElement("Implementer",
-                    new XAttribute("Id", client.Id),
-                    new XElement("Name", client.Name),
-                    new XElement("WorkingTime", client.WorkingTime),
-                    new XElement("PauseTime", client.PauseTime)));
-                }
-                XDocument xDocument = new XDocument(xElement);
-                xDocument.Save(ImplementerFileName);
             }
         }
 
@@ -289,6 +268,27 @@ namespace CandyShopFileImplement
 
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(PastryFileName);
+            }
+        }
+
+        private void SaveMessages()
+        {
+            // прописать логику
+            if (Messages != null)
+            {
+                var xElement = new XElement("Messages");
+                foreach (var msg in Messages)
+                {
+                    xElement.Add(new XElement("Message",
+                    new XAttribute("MessageId", msg.MessageId),
+                    new XElement("Body", msg.Body),
+                    new XElement("DateDelivery", msg.DateDelivery),
+                    new XElement("SenderName", msg.SenderName),
+                    new XElement("Subject", msg.Subject),
+                    new XElement("ClientId", msg.ClientId)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(MessageFileName);
             }
         }
     }

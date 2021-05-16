@@ -76,8 +76,8 @@ rec.Implementer.Name : string.Empty,
             using (var context = new CandyShopDatabase())
             {
                 var order = context.Orders
-                    .Include(rec => rec.Pastry)
                     .Include(rec => rec.Client)
+                    .Include(rec => rec.Pastry)
                     .Include(rec => rec.Implementer)
                 .FirstOrDefault(rec => rec.Id == model.Id);
 
@@ -134,6 +134,7 @@ rec.Implementer.Name : string.Empty,
         }
         private OrderViewModel CreateModel(Order order)
         {
+         //   Console.WriteLine(order.Implementer.Name);
             return new OrderViewModel
             {
                 Id = order.Id,

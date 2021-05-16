@@ -44,8 +44,8 @@
     <Compile Include="Client.cs" />
     <Compile Include="ClientStorage.cs" />
     <Compile Include="FileDataListSingleton.cs" />
-    <Compile Include="Implementer.cs" />
-    <Compile Include="ImplementerStorage.cs" />
+    <Compile Include="MessageInfo.cs" />
+    <Compile Include="MessageInfoStorage.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderStorage.cs" />
     <Compile Include="Pastry.cs" />
