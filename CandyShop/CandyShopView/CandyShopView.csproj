@@ -13,6 +13,9 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,11 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -232,6 +232,12 @@
     <Compile Include="FormStorages.Designer.cs">
       <DependentUpon>FormStorages.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormClients.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormClients.Designer.cs">
+      <DependentUpon>FormClients.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportOrders.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,9 +297,6 @@
     <EmbeddedResource Include="FormReportOrdersByDates.resx">
       <DependentUpon>FormReportOrdersByDates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReportSweetsStorages.resx">
-      <DependentUpon>FormReportSweetsStorages.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormStorage.resx">
       <DependentUpon>FormStorage.cs</DependentUpon>
     </EmbeddedResource>
@@ -301,6 +304,9 @@
       <DependentUpon>FormStorageReplenishment.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <EmbeddedResource Include="FormClients.resx">
+      <DependentUpon>FormClients.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReportOrders.resx">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </EmbeddedResource>

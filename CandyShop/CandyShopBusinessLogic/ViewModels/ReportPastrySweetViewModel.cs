@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace CandyShopBusinessLogic.ViewModels
 {
     public class ReportPastrySweetViewModel
     {
-        [DisplayName("Название кондитерского изделия")]
-        public string PastryName { get; set; }
+        [DataMember]
+        [DisplayName("Название сладости")]
+        public string SweetName { get; set; }
+        [DataMember]
         public int TotalCount { get; set; }
-        public List<Tuple<string, int>> Sweets { get; set; }
+        [DataMember]
+        public List<Tuple<string, int>> Pastrys { get; set; }
     }
 }

@@ -171,7 +171,7 @@ namespace CandyShopView
                     {
                         FileName = dialog.FileName
                     });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                    MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 }
             }
@@ -186,6 +186,11 @@ namespace CandyShopView
         private void ordersByDatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportOrdersByDates>();
+            form.ShowDialog();
+        }
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
             form.ShowDialog();
         }
     }

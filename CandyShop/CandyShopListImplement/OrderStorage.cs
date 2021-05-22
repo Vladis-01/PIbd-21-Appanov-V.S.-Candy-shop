@@ -30,10 +30,19 @@ namespace CandyShopListImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
+            string pastryName = null;
+            foreach (var pastry in source.Pastrys)
+            {
+                if (pastry.Id == order.PastryId)
+                {
+                    pastryName = pastry.PastryName;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                PastryName = pastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
@@ -61,7 +70,9 @@ namespace CandyShopListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) ||
+(model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
+(model.ClientId.HasValue && order.ClientId == model.ClientId))
                 {
                     result.Add(CreateModel(order));
                 }

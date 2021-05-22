@@ -70,11 +70,11 @@ namespace CandyShopBusinessLogic.BusinessLogics
                             ShareStringPart = shareStringPart,
                             ColumnName = "A",
                             RowIndex = rowIndex,
-                            Text = pc.PastryName,
+                            Text = pc.SweetName,
                             StyleIndex = 0U
                         });
                         rowIndex++;
-                        foreach (var product in pc.Sweets)
+                        foreach (var product in pc.Pastrys)
                         {
                             InsertCellInWorksheet(new ExcelCellParameters
                             {
