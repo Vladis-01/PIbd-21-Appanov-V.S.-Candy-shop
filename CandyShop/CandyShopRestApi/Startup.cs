@@ -35,10 +35,10 @@ namespace CandyShopRestApi
 
             MailLogic.MailConfig(new MailConfig
             {
-                SmtpClientHost = Configuration["SmtpClientHost"],
-                SmtpClientPort = Convert.ToInt32(Configuration["SmtpClientPort"]),
-                MailLogin = Configuration["MailLogin"],
-                MailPassword = Configuration["MailPassword"],
+                SmtpClientHost = "smtp.gmail.com",
+                SmtpClientPort = 587,
+                MailLogin = "VladAppanov@gmail.com",
+                MailPassword = "Alyona_ham59250005"
             });
 
             var timer = new Timer(new TimerCallback(MailCheck), new MailCheckInfo

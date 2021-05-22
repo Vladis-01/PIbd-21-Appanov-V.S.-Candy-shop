@@ -158,15 +158,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CandyShopDatabase.cs" />
+    <Compile Include="Implement\BackUpLogic.cs" />
     <Compile Include="Implement\ClientStorage.cs" />
     <Compile Include="Implement\ImplementerStorage.cs" />
     <Compile Include="Implement\MessageInfoStorage.cs" />
     <Compile Include="Implement\OrderStorage.cs" />
     <Compile Include="Implement\PastryStorage.cs" />
     <Compile Include="Implement\SweetStorage.cs" />
-    <Compile Include="Migrations\20210504113243_InitialCreate.cs" />
-    <Compile Include="Migrations\20210504113243_InitialCreate.designer.cs">
-      <DependentUpon>20210504113243_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\20210517070855_implement.cs" />
+    <Compile Include="Migrations\20210517070855_implement.designer.cs">
+      <DependentUpon>20210517070855_implement.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CandyShopDatabaseModelSnapshot.cs" />
     <Compile Include="models\Client.cs" />

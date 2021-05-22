@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CandyShopBusinessLogic.Attributes;
+using System.ComponentModel;
 namespace CandyShopBusinessLogic.ViewModels
 {
     /// <summary>
@@ -6,12 +7,13 @@ namespace CandyShopBusinessLogic.ViewModels
     /// </summary>
     public class ImplementerViewModel
     {
+        [Column(title: "Number", width: 100)]
         public int Id { get; set; }
-        [DisplayName("ФИО исполнителя")]
+        [Column(title: "ФИО исполнителя", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string Name { get; set; }
-        [DisplayName("Время на заказ")]
+        [Column(title: "Время на заказ", width: 100)]
         public int WorkingTime { get; set; }
-        [DisplayName("Время на перерыв")]
+        [Column(title: "Время на перерыв", width: 100)]
         public int PauseTime { get; set; }
     }
 }
