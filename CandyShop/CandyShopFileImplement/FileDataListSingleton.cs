@@ -157,6 +157,7 @@ namespace CandyShopFileImplement
                     {
                         order.DateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value);
                     }
+
                     if (!string.IsNullOrEmpty(elem.Element("ImplementerId").Value))
                     {
                         order.ImplementerId = Convert.ToInt32(elem.Element("ImplementerId").Value);

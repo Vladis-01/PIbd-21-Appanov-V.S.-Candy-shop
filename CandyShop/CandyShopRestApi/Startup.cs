@@ -38,7 +38,7 @@ namespace CandyShopRestApi
                 SmtpClientHost = Configuration["SmtpClientHost"],
                 SmtpClientPort = Convert.ToInt32(Configuration["SmtpClientPort"]),
                 MailLogin = Configuration["MailLogin"],
-                MailPassword = Configuration["MailPassword"],
+                MailPassword = Configuration["MailPassword"]
             });
 
             var timer = new Timer(new TimerCallback(MailCheck), new MailCheckInfo
