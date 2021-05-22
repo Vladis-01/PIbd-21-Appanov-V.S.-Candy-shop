@@ -1,4 +1,5 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
+using CandyShopBusinessLogic.Enums;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
 using CandyShopListImplement.Models;
@@ -21,6 +22,8 @@ namespace CandyShopListImplement.Implements
                 order.Id = (int)model.Id;
             }
             order.PastryId = model.PastryId;
+            order.ClientId = model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -38,11 +41,31 @@ namespace CandyShopListImplement.Implements
                     pastryName = pastry.PastryName;
                 }
             }
+            string clientFIO = null;
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.ClientFIO;
+                }
+            }
+            string implementerName = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.ImplementerId)
+                {
+                    implementerName = implementer.Name;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
                 PastryName = pastryName,
+                ClientId = order.ClientId.Value,
+                ClientFIO = clientFIO,
+                ImplementerId = order.ImplementerId.Value,
+                ImplementerName = implementerName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
@@ -71,8 +94,10 @@ namespace CandyShopListImplement.Implements
             foreach (var order in source.Orders)
             {
                 if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) ||
-(model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
-(model.ClientId.HasValue && order.ClientId == model.ClientId))
+                 (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) ||
+                 (model.ClientId.HasValue && order.ClientId == model.ClientId) ||
+                 (model.FreeOrders.HasValue && model.FreeOrders.Value && order.Status == OrderStatus.Принят) ||
+                 (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется))
                 {
                     result.Add(CreateModel(order));
                 }

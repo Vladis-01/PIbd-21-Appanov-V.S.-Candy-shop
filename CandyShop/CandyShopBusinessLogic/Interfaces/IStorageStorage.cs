@@ -18,6 +18,6 @@ namespace CandyShopBusinessLogic.Interfaces
 
         void Delete(StorageBindingModel model);
 
-        void CheckSweets(PastryViewModel model, int sweetCountInOrder);
+        bool CheckSweets(PastryViewModel model, int sweetCountInOrder);
     }
 }

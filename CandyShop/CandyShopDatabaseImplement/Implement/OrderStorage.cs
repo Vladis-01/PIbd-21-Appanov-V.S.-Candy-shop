@@ -1,6 +1,7 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
+using CandyShopBusinessLogic.Enums;
 using CandyShopDatabaseImplement.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,6 +19,7 @@ namespace CandyShopDatabaseImplement.Implements
             {
                 return context.Orders.Include(rec => rec.Pastry)
                     .Include(rec => rec.Client)
+                    .Include(rec => rec.Implementer)
                     .Select(CreateModel).ToList();
             }
         }
@@ -28,17 +30,23 @@ namespace CandyShopDatabaseImplement.Implements
                 return null;
             }
             using (var context = new CandyShopDatabase())
-                return context.Orders.Include(rec => rec.Pastry)
-                    .Include(rec => rec.Client)
-                    .Where(rec => (!model.DateFrom.HasValue &&
-                    !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-                    (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >=
-                    model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-                    (model.ClientId.HasValue && rec.ClientId == model.ClientId))
-                    .Select(CreateModel).ToList();
+            {
+                return context.Orders
+                .Include(rec => rec.Pastry)
+                .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.ТребуютсяСладости))
+                .Select(CreateModel).ToList();
+            }
+
         }
 
-            public OrderViewModel GetElement(OrderBindingModel model)
+        public OrderViewModel GetElement(OrderBindingModel model)
         {
             if (model == null)
             {
@@ -48,8 +56,9 @@ namespace CandyShopDatabaseImplement.Implements
             using (var context = new CandyShopDatabase())
             {
                 var order = context.Orders
-                    .Include(rec => rec.Client)
                     .Include(rec => rec.Pastry)
+                    .Include(rec => rec.Client)
+                    .Include(rec => rec.Implementer)
                 .FirstOrDefault(rec => rec.Id == model.Id);
 
                 return order != null ?
@@ -74,15 +83,20 @@ namespace CandyShopDatabaseImplement.Implements
             {
                 var element = context.Orders.Include(rec => rec.Client)
                    .Include(rec => rec.Pastry)
+                   .Include(rec => rec.Implementer)
                    .FirstOrDefault(rec => rec.Id == model.Id);
 
                 if (element == null)
                 {
-                    throw new Exception("Element not found");
+                    throw new Exception("Элемент не найден");
                 }
                 if (!model.ClientId.HasValue)
                 {
                     model.ClientId = element.ClientId;
+                }
+                if (!model.ImplementerId.HasValue)
+                {
+                    model.ImplementerId = element.ImplementerId;
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
@@ -110,19 +124,23 @@ namespace CandyShopDatabaseImplement.Implements
                 Id = order.Id,
                 PastryId = order.PastryId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 ClientFIO = order.Client.ClientFIO,
                 PastryName = order.Pastry.PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order?.DateImplement
+                DateImplement = order.DateImplement,                
+                ImplementerName = order.ImplementerId.HasValue ?
+                    order.Implementer.Name : string.Empty
             };
         }
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PastryId = model.PastryId;
             order.ClientId = Convert.ToInt32(model.ClientId);
+            order.ImplementerId = model.ImplementerId;
             order.Sum = model.Sum;
             order.Count = model.Count;
             order.Status = model.Status;

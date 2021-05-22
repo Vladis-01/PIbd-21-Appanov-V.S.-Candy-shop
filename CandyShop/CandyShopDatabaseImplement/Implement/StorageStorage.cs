@@ -204,7 +204,7 @@ namespace CandyShopDatabaseImplement.Implements
             return storage;
         }
 
-        public void CheckSweets(PastryViewModel model, int sweetCountInOrder)
+        public bool CheckSweets(PastryViewModel model, int sweetCountInOrder)
         {
             using (var context = new CandyShopDatabase())
             {
@@ -244,13 +244,14 @@ namespace CandyShopDatabaseImplement.Implements
                         {
                             transaction.Rollback();
 
-                            throw new Exception("Не хватает компонентов для изготовления данного печатного изделия!");
+                            return false;
                         }
                     }
 
                     context.SaveChanges();
 
                     transaction.Commit();
+                    return true;
                 }
             }
         }
