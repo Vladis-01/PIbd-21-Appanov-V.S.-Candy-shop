@@ -1,4 +1,5 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
+using CandyShopBusinessLogic.Enums;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
 using CandyShopFileImplement.Models;
@@ -37,6 +38,9 @@ namespace CandyShopFileImplement.Implements
                !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >=
                model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+               (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+               (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят) ||
+               (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(CreateModel).ToList();
         }
 
@@ -107,6 +111,7 @@ namespace CandyShopFileImplement.Implements
         {
             order.PastryId = model.PastryId;
             order.ClientId = Convert.ToInt32(model.ClientId);
+            order.ImplementerId = model.ImplementerId.Value;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -124,6 +129,8 @@ namespace CandyShopFileImplement.Implements
                 ClientId = order.ClientId,
                 ClientFIO = source.Clients.FirstOrDefault(client => client.Id == order.ClientId)?.ClientFIO,
                 PastryName = source.Pastrys.FirstOrDefault(gift => gift.Id == order.PastryId)?.PastryName,
+                ImplementerId = order.ImplementerId.Value,
+                ImplementerName = source.Implementers.FirstOrDefault(implementer => implementer.Id == order.ImplementerId)?.Name,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
