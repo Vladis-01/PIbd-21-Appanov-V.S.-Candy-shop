@@ -140,7 +140,7 @@ namespace CandyShopFileImplement.Implements
             }
         }
 
-        public void CheckSweets(PastryViewModel model, int sweetCountInOrder)
+        public bool CheckSweets(PastryViewModel model, int sweetCountInOrder)
         {
             throw new NotImplementedException();
         }
