@@ -10,7 +10,7 @@ namespace CandyShopDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CandyShopDatabaselab5;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CandyShopDatabase140;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
@@ -19,6 +19,8 @@ namespace CandyShopDatabaseImplement
         public virtual DbSet<Pastry> Pastrys { set; get; }
         public virtual DbSet<PastrySweet> PastrySweets { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
+        public virtual DbSet<Storage> Storages { set; get; }
+        public virtual DbSet<StorageSweet> StorageSweets { set; get; }
         public virtual DbSet<Client> Clients { set; get; }
     }
 }

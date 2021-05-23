@@ -7,5 +7,6 @@ namespace CandyShopBusinessLogic.HelperModels
         public string FileName { get; set; }
         public string Title { get; set; }
         public List<ReportPastrySweetViewModel> PastrySweets { get; set; }
+        public List<ReportStorageSweetViewModel> Storages { get; set; }
     }
 }

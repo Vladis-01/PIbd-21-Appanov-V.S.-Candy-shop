@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandyShopDatabaseImplement"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandyShopRestApi", "CandyShopRestApi\CandyShopRestApi.csproj", "{0CF330C6-D975-44E8-9337-3BB3C0278224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandyShowClientApp", "CandyShowClientApp\CandyShowClientApp.csproj", "{163AACFF-CB19-484F-9326-144C5FD18155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandyShowClientApp", "CandyShowClientApp\CandyShowClientApp.csproj", "{163AACFF-CB19-484F-9326-144C5FD18155}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageEmployeeApp", "StorageEmployeeApp\StorageEmployeeApp.csproj", "{025F4BCC-0BC8-46DA-A4AE-435002DE8664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{163AACFF-CB19-484F-9326-144C5FD18155}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163AACFF-CB19-484F-9326-144C5FD18155}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163AACFF-CB19-484F-9326-144C5FD18155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{025F4BCC-0BC8-46DA-A4AE-435002DE8664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{025F4BCC-0BC8-46DA-A4AE-435002DE8664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{025F4BCC-0BC8-46DA-A4AE-435002DE8664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{025F4BCC-0BC8-46DA-A4AE-435002DE8664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

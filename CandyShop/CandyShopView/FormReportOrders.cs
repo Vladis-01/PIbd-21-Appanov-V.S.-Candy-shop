@@ -19,7 +19,7 @@ namespace CandyShopView
 
         private void FormClientOrders_Load(object sender, EventArgs e)
         {
-
+            reportViewerOrders.RefreshReport();
         }
 
         private void ButtonMake_Click(object sender, EventArgs e)
