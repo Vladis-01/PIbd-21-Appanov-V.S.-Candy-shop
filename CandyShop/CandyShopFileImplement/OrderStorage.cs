@@ -109,8 +109,7 @@ namespace CandyShopFileImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PastryId = model.PastryId;
-            order.ClientId = model.ClientId.Value;
-            order.ImplementerId = model.ImplementerId.Value;
+            order.ClientId = Convert.ToInt32(model.ClientId);
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -125,11 +124,9 @@ namespace CandyShopFileImplement.Implements
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                ClientId = order.ClientId.Value,
+                ClientId = order.ClientId,
                 ClientFIO = source.Clients.FirstOrDefault(client => client.Id == order.ClientId)?.ClientFIO,
                 PastryName = source.Pastrys.FirstOrDefault(gift => gift.Id == order.PastryId)?.PastryName,
-                ImplementerId = order.ImplementerId.Value,
-                ImplementerName = source.Implementers.FirstOrDefault(implementer => implementer.Id == order.ImplementerId)?.Name,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

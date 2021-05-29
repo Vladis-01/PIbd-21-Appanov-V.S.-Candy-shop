@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CandyShopDatabaseImplement.Migrations
 {
     [DbContext(typeof(CandyShopDatabase))]
-    [Migration("20210517080730_implement")]
-    partial class implement
+    [Migration("20210516175024_InitialCreat")]
+    partial class InitialCreat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,33 @@ namespace CandyShopDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Implementers");
+                });
+
+            modelBuilder.Entity("CandyShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CandyShopDatabaseImplement.Models.Order", b =>
@@ -215,6 +242,13 @@ namespace CandyShopDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("CandyShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("CandyShopDatabaseImplement.models.Client", "Client")
+                        .WithMany("Messages")
+                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("CandyShopDatabaseImplement.Models.Order", b =>

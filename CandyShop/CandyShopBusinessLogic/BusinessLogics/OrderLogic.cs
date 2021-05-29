@@ -1,5 +1,6 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.Enums;
+using CandyShopBusinessLogic.HelperModels;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
 using System;
@@ -11,13 +12,15 @@ namespace CandyShopBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IPastryStorage _pastryStorage;
         private readonly IStorageStorage _storageStorage;
+        private readonly IClientStorage _clientStorage;
         private readonly object locker = new object();
       
-        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage)       
+        public OrderLogic(IOrderStorage orderStorage, IPastryStorage pastryStorage, IStorageStorage storageStorage, IClientStorage clientStorage)       
         {
             _orderStorage = orderStorage;
             _pastryStorage = pastryStorage;
             _storageStorage = storageStorage;
+            _clientStorage = clientStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -42,6 +45,17 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят
             });
+
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id =
+model.ClientId
+                })?.Email,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
+            });
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
@@ -57,26 +71,14 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 {
                     throw new Exception("Не найден заказ");
                 }
-                if (order.Status != OrderStatus.Принят || order.Status != OrderStatus.ТребуютсяСладости)
+                if (order.Status != OrderStatus.Принят)
                 {
-                    throw new Exception("Заказ не в статусе \"Принят\" или не в \"ТребуютсяСладости\"");
+                    throw new Exception("Заказ не в статусе \"Принят\"");
                 }
                 if (order.ImplementerId.HasValue)
                 {
                     throw new Exception("У заказа уже есть исполнитель");
                 }
-                _orderStorage.Update(new OrderBindingModel
-                {
-                    Id = order.Id,
-                    ClientId = order.ClientId,
-                    ImplementerId = model.ImplementerId,
-                    PastryId = order.PastryId,
-                    Count = order.Count,
-                    Sum = order.Sum,
-                    DateCreate = order.DateCreate,
-                    DateImplement = DateTime.Now,
-                    Status = OrderStatus.Выполняется
-                });
 
                 var pastry = _pastryStorage.GetElement(new PastryBindingModel
                 {
@@ -98,6 +100,16 @@ namespace CandyShopBusinessLogic.BusinessLogics
                     Sum = order.Sum,
                     DateCreate = order.DateCreate,
                     Status = status
+                      });
+              
+                MailLogic.MailSendAsync(new MailSendInfo
+                {
+                    MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                    {
+                        Id = order.ClientId
+                    })?.Email,
+                    Subject = $"Заказ №{order.Id}",
+                    Text = $"Заказ №{order.Id} передан в работу."
                 });
             }
         }
@@ -133,6 +145,17 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 DateCreate = order.DateCreate,
                 Status = OrderStatus.Готов
             });
+
+            // Отправить письмо
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Finish order",
+                Text = $"Order for the amount {order.Sum:N2} finished."
+            });
         }
         public void PayOrder(ChangeStatusBindingModel model)
         {
@@ -160,6 +183,17 @@ namespace CandyShopBusinessLogic.BusinessLogics
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
+            });
+
+            // Отправить письмо
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Paid order",
+                Text = $"Order for the amount {order.Sum:N2} paid."
             });
         }
     }
