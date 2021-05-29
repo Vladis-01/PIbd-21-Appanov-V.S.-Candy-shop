@@ -71,9 +71,9 @@ model.ClientId
                 {
                     throw new Exception("Не найден заказ");
                 }
-                if (order.Status != OrderStatus.Принят)
+                if (order.Status != OrderStatus.Принят || order.Status != OrderStatus.ТребуютсяСладости)
                 {
-                    throw new Exception("Заказ не в статусе \"Принят\"");
+                    throw new Exception("Заказ не в статусе \"Принят\" или не в \"ТребуютсяСладости\"");
                 }
                 if (order.ImplementerId.HasValue)
                 {
@@ -99,6 +99,7 @@ model.ClientId
                     Count = order.Count,
                     Sum = order.Sum,
                     DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
                     Status = status
                       });
               

@@ -110,6 +110,7 @@ namespace CandyShopFileImplement.Implements
         {
             order.PastryId = model.PastryId;
             order.ClientId = Convert.ToInt32(model.ClientId);
+            order.ImplementerId = model.ImplementerId.Value;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -128,6 +129,8 @@ namespace CandyShopFileImplement.Implements
                 ClientFIO = source.Clients.FirstOrDefault(client => client.Id == order.ClientId)?.ClientFIO,
                 PastryName = source.Pastrys.FirstOrDefault(gift => gift.Id == order.PastryId)?.PastryName,
                 Count = order.Count,
+                ImplementerId = order.ImplementerId.Value,
+                ImplementerName = source.Implementers.FirstOrDefault(implementer => implementer.Id == order.ImplementerId)?.Name,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
