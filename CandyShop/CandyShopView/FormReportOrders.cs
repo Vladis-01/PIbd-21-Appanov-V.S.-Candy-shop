@@ -2,6 +2,7 @@
 using CandyShopBusinessLogic.BusinessLogics;
 using Microsoft.Reporting.WinForms;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 using Unity;
 namespace CandyShopView
@@ -38,11 +39,12 @@ namespace CandyShopView
                 " по " +
                 dateTimePickerTo.Value.ToShortDateString());
                 reportViewerOrders.LocalReport.SetParameters(parameter);
-                var dataSource = logic.GetOrders(new ReportBindingModel
-                {
-                    DateFrom = dateTimePickerFrom.Value,
-                    DateTo = dateTimePickerTo.Value
-                });
+                MethodInfo method = logic.GetType().GetMethod("GetOrders");
+                var dataSource = method.Invoke(logic, new object[] { new ReportBindingModel
+                        {
+                            DateFrom = dateTimePickerFrom.Value,
+                            DateTo = dateTimePickerTo.Value
+                        }});
                 ReportDataSource source = new ReportDataSource("DataSetOrders", dataSource);
                 reportViewerOrders.LocalReport.DataSources.Add(source);
                 reportViewerOrders.RefreshReport();
@@ -67,12 +69,14 @@ namespace CandyShopView
                 {
                     try
                     {
-                        logic.SaveOrdersToPdfFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveOrdersToPdfFile");
+                        method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName,
                             DateFrom = dateTimePickerFrom.Value,
                             DateTo = dateTimePickerTo.Value
-                        });
+                        }});
+                        
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     }

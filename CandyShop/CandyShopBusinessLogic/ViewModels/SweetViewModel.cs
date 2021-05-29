@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CandyShopBusinessLogic.Attributes;
+using System.ComponentModel;
 
 namespace CandyShopBusinessLogic.ViewModels
 {
@@ -7,8 +8,9 @@ namespace CandyShopBusinessLogic.ViewModels
     /// </summary>
     public class SweetViewModel
     {
+        [Column(title: "Номер", width: 100)]
         public int Id { get; set; }
-        [DisplayName("Название сладости")]
+        [Column(title: "Название сладости", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string SweetName { get; set; }
     }
 }

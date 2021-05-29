@@ -1,11 +1,13 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.BusinessLogics;
+using CandyShopBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,8 +37,7 @@ namespace CandyShopView
         {
             try
             {
-                dataGridView.DataSource = logic.Read(null);
-                dataGridView.Columns["Id"].Visible = false;
+                Program.ConfigGrid(logic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {

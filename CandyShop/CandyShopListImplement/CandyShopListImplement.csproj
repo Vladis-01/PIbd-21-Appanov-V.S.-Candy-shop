@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementer.cs" />
-    <Compile Include="ImplementerStorage.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageStorage .cs" />
     <Compile Include="Client.cs" />

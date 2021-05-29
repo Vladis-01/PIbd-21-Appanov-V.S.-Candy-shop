@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,10 +42,11 @@ namespace CandyShopView
                 {
                     try
                     {
-                        logic.SaveOrdersByDatesToPdfFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("GetOrderReportByDate");
+                        var dataSource = method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName
-                        });
+                        }});
                         MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     }
@@ -60,7 +62,8 @@ namespace CandyShopView
         {
             try
             {
-                var dataSource = logic.GetOrdersByDates();
+                MethodInfo method = logic.GetType().GetMethod("GetOrderReportByDate");
+                var dataSource = method.Invoke(logic, new object[] { new ReportBindingModel{}});
                 ReportDataSource source = new ReportDataSource("DataSetOrdersByDates", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();

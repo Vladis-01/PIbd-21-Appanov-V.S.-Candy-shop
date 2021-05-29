@@ -71,9 +71,9 @@ model.ClientId
                 {
                     throw new Exception("Не найден заказ");
                 }
-                if (order.Status != OrderStatus.Принят || order.Status != OrderStatus.ТребуютсяСладости)
+                if (order.Status != OrderStatus.Принят)
                 {
-                    throw new Exception("Заказ не в статусе \"Принят\" или не в \"ТребуютсяСладости\"");
+                    throw new Exception("Заказ не в статусе \"Принят\"");
                 }
                 if (order.ImplementerId.HasValue)
                 {
@@ -93,16 +93,15 @@ model.ClientId
                 _orderStorage.Update(new OrderBindingModel
                 {
                     Id = order.Id,
+                    PastryId = order.PastryId,
                     ClientId = order.ClientId,
                     ImplementerId = model.ImplementerId,
-                    PastryId = order.PastryId,
                     Count = order.Count,
                     Sum = order.Sum,
                     DateCreate = order.DateCreate,
-                    DateImplement = DateTime.Now,
-                    Status = OrderStatus.Выполняется
-                });
-
+                    Status = status
+                      });
+              
                 MailLogic.MailSendAsync(new MailSendInfo
                 {
                     MailAddress = _clientStorage.GetElement(new ClientBindingModel

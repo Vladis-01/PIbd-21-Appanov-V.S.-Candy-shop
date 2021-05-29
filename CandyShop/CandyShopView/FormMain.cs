@@ -4,6 +4,8 @@ using System;
 using System.Windows.Forms;
 using Unity;
 using CandyShopBusinessLogic.ViewModels;
+using System.Reflection;
+
 namespace CandyShopView
 {
     public partial class FormMain : Form
@@ -13,12 +15,14 @@ namespace CandyShopView
         private readonly OrderLogic orderLogic;
         private readonly ReportLogic reportLogic;
         private readonly WorkModeling workModeling;
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling)
+        private readonly BackUpAbstractLogic _backUpAbstractLogic;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling, BackUpAbstractLogic _backUpAbstractLogic)
         {
             InitializeComponent();
             this.orderLogic = orderLogic;
             this.reportLogic = reportLogic;
             this.workModeling = workModeling;
+            this._backUpAbstractLogic = _backUpAbstractLogic;
             LoadData();
         }
         private void FormMain_Load(object sender, EventArgs e)
@@ -29,15 +33,7 @@ namespace CandyShopView
         {
             try
             {
-                var ordersList = orderLogic.Read(null);
-                if (ordersList != null)
-                {
-                    dataGridView.DataSource = ordersList;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
-                }
+                Program.ConfigGrid(orderLogic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {
@@ -143,11 +139,11 @@ namespace CandyShopView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    reportLogic.SavePastrysToWordFile(new ReportBindingModel
-                    {
-                        FileName =
-                    dialog.FileName
-                    });
+                    MethodInfo method = reportLogic.GetType().GetMethod("SaveSweetsToWordFile");
+                    method.Invoke(reportLogic, new object[] { new ReportBindingModel
+                        {
+                            FileName = dialog.FileName
+                        }});
                     MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 }
@@ -170,10 +166,11 @@ namespace CandyShopView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    reportLogic.SaveStoragesToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    });
+                    MethodInfo method = reportLogic.GetType().GetMethod("SaveStoragesToWordFile");
+                    method.Invoke(reportLogic, new object[] { new ReportBindingModel
+                        {
+                            FileName = dialog.FileName
+                        }});
                     MessageBox.Show("Done", "Success", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 }
@@ -213,6 +210,28 @@ namespace CandyShopView
         {
             var form = Container.Resolve<FormMails>();
             form.ShowDialog();
+        }
+
+        private void создатьБекапToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_backUpAbstractLogic != null)
+                {
+                    var fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        _backUpAbstractLogic.CreateArchive(fbd.SelectedPath);
+                        MessageBox.Show("Создать бекап", "Message",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
         }
     }
 }

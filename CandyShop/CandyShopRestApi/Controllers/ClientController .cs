@@ -54,7 +54,7 @@ namespace CandyShopRestApi.Controllers
 
         private void CheckData(ClientBindingModel model)
         {
-            if (!Regex.IsMatch(model.Email, @"mail"))
+            if (!Regex.IsMatch(model.Email, @"gmail"))
             {
                 throw new Exception("В качестве логина должна быть указана почта");
             }
