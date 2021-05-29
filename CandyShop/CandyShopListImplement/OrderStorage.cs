@@ -41,6 +41,7 @@ namespace CandyShopListImplement.Implements
                     pastryName = pastry.PastryName;
                 }
             }
+
             string clientFIO = null;
             foreach (var client in source.Clients)
             {
@@ -54,15 +55,16 @@ namespace CandyShopListImplement.Implements
             {
                 if (implementer.Id == order.ImplementerId)
                 {
-                    implementerName = implementer.Name;
+                    implementerName = implementer.ImplementerFIO;
                 }
             }
+
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
                 PastryName = pastryName,
-                ClientId = order.ClientId.Value,
+                ClientId = order.ClientId,
                 ClientFIO = clientFIO,
                 ImplementerId = order.ImplementerId.Value,
                 ImplementerName = implementerName,

@@ -35,7 +35,7 @@ namespace CandyShopListImplement.Implements
 			List<ImplementerViewModel> result = new List<ImplementerViewModel>();
 			foreach (var implementer in source.Implementers)
 			{
-				if (implementer.Name.Contains(model.Name))
+				if (implementer.ImplementerFIO.Contains(model.Name))
 				{
 					result.Add(CreateModel(implementer));
 				}
@@ -104,7 +104,7 @@ namespace CandyShopListImplement.Implements
 
 		private Implementer CreateModel(ImplementerBindingModel model, Implementer implementer)
 		{
-			implementer.Name = model.Name;
+			implementer.ImplementerFIO = model.Name;
 			implementer.WorkingTime = model.WorkingTime;
 			implementer.PauseTime = model.PauseTime;
 			return implementer;
@@ -115,7 +115,7 @@ namespace CandyShopListImplement.Implements
 			return new ImplementerViewModel
 			{
 				Id = implementer.Id,
-				Name = implementer.Name,
+				Name = implementer.ImplementerFIO,
 				WorkingTime = implementer.WorkingTime,
 				PauseTime = implementer.PauseTime
 			};

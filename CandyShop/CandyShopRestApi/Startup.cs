@@ -1,4 +1,5 @@
 ﻿using CandyShopBusinessLogic.BusinessLogics;
+using CandyShopBusinessLogic.HelperModels;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopDatabaseImplement.Implements;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading;
 
 namespace CandyShopRestApi
 {
@@ -26,12 +29,35 @@ namespace CandyShopRestApi
             services.AddTransient<IPastryStorage, PastryStorage>();
             services.AddTransient<IStorageStorage, StorageStorage>();
             services.AddTransient<ISweetStorage, SweetStorage>();
+            services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
             services.AddTransient<StorageLogic>();
             services.AddTransient<PastryLogic>();
             services.AddTransient<SweetLogic>();
+            services.AddTransient<MailLogic>();
+
+            MailLogic.MailConfig(new MailConfig
+            {
+                SmtpClientHost = "smtp.gmail.com",
+                SmtpClientPort = 587,
+                MailLogin = "VladAppanov@gmail.com",
+                MailPassword = "Alyona_ham59250005"
+            });
+
+            var timer = new Timer(new TimerCallback(MailCheck), new MailCheckInfo
+            {
+                PopHost = Configuration["PopHost"],
+                PopPort = Convert.ToInt32(Configuration["PopPort"]),
+                Storage = new MessageInfoStorage(),
+                ClientStorage = new ClientStorage()
+            }, 0, 100000);
             services.AddControllers().AddNewtonsoftJson();
+        }
+
+        private static void MailCheck(object obj)
+        {
+            MailLogic.MailCheck((MailCheckInfo)obj);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
