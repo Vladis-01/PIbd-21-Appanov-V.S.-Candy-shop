@@ -1,11 +1,13 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.BusinessLogics;
+using CandyShopBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,7 +32,8 @@ namespace CandyShopView
         {
             try
             {
-                var dict = logic.GetStorageSweet();
+                MethodInfo method = logic.GetType().GetMethod("GetStorageSweets");
+                var dict = (List<ReportStorageSweetViewModel>)method.Invoke(logic, null);
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -61,7 +64,8 @@ namespace CandyShopView
                 {
                     try
                     {
-                        logic.SaveStorageSweetToExcelFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveStorageSweetsToExcelFile");
+                        method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName
                         });

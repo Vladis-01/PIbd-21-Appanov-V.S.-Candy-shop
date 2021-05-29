@@ -1,5 +1,4 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
-using CandyShopBusinessLogic.Enums;
 using CandyShopBusinessLogic.Interfaces;
 using CandyShopBusinessLogic.ViewModels;
 using CandyShopListImplement.Models;

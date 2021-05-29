@@ -1,6 +1,9 @@
 ﻿using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.BusinessLogics;
+using CandyShopBusinessLogic.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Unity;
 namespace CandyShopView
@@ -18,7 +21,8 @@ namespace CandyShopView
         {
             try
             {
-                var dict = logic.GetPastrySweet(); 
+                MethodInfo method = logic.GetType().GetMethod("GetPastrySweet");
+                var dict = (List<ReportPastrySweetViewModel>)method.Invoke(logic, null);
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -30,7 +34,6 @@ namespace CandyShopView
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }
                         dataGridView.Rows.Add(new object[] { "Итого", "", elem.TotalCount });
-                     //   dataGridView.Rows.Add(new object[] { });
                     }
                 }
             }
@@ -48,7 +51,8 @@ namespace CandyShopView
                 {
                     try
                     {
-                        logic.SavePastrySweetToExcelFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SavePastrysSweetsToExcelFile");
+                        method.Invoke(logic, new object[] { new ReportBindingModel
                         {
                             FileName = dialog.FileName
                         });

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using CandyShopBusinessLogic.Attributes;
 
 namespace CandyShopBusinessLogic.ViewModels
 {
@@ -7,18 +8,19 @@ namespace CandyShopBusinessLogic.ViewModels
     public class ClientViewModel
     {
         [DataMember]
+        [Column(title: "Номер", width: 100)]
         public int Id { get; set; }
 
         [DataMember]
-        [DisplayName("Full Name")]
+        [Column(title: "ФИО", width: 150)]
         public string ClientFIO { get; set; }
 
         [DataMember]
-        [DisplayName("Email")]
+        [Column(title: "Email", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string Email { get; set; }
 
         [DataMember]
-        [DisplayName("Password")]
+        [Column(title: "Пароль", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string Password { get; set; }
     }
 }

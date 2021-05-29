@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Unity;
 using CandyShopBusinessLogic.BindingModels;
 using CandyShopBusinessLogic.BusinessLogics;
+using System.Reflection;
+using CandyShopBusinessLogic.ViewModels;
 
 namespace CandyShopView
 {
@@ -27,15 +29,9 @@ namespace CandyShopView
         {
             try
             {
-                var list = logic.Read(null);
-
-                if (list != null)
-                {
-                    dataGridView.DataSource = list;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[4].Visible = false;
-                    dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
+                var method = typeof(Program).GetMethod("ConfigGrid");
+                MethodInfo generic = method.MakeGenericMethod(typeof(StorageViewModel));
+                generic.Invoke(this, new object[] { logic.Read(null), dataGridView });
             }
             catch (Exception ex)
             {
